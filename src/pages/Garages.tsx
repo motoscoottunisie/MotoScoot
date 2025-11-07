@@ -33,13 +33,20 @@ const Garages: React.FC = () => {
     fetchGarages();
   }, []);
 
+  useEffect(() => {
+    if (selectedGouvernorat || selectedSpecialty) {
+      fetchFilteredGarages();
+    }
+  }, [selectedGouvernorat, selectedSpecialty]);
+
   const fetchGarages = async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from('garages')
-        .select('*')
-        .order('rating', { ascending: false });
+        .select('id, name, description, gouvernorat, address, phone, email, opening_hours, rating, specialties, brands, image_url')
+        .order('rating', { ascending: false })
+        .limit(50);
 
       if (error) throw error;
       setGarages(data || []);
@@ -50,21 +57,32 @@ const Garages: React.FC = () => {
     }
   };
 
-  const filteredGarages = useMemo(() => {
-    let results = [...garages];
+  const fetchFilteredGarages = async () => {
+    try {
+      let query = supabase
+        .from('garages')
+        .select('id, name, description, gouvernorat, address, phone, email, opening_hours, rating, specialties, brands, image_url')
+        .order('rating', { ascending: false })
+        .limit(50);
 
-    if (selectedGouvernorat) {
-      results = results.filter(garage => garage.gouvernorat === selectedGouvernorat);
+      if (selectedGouvernorat) {
+        query = query.eq('gouvernorat', selectedGouvernorat);
+      }
+
+      if (selectedSpecialty) {
+        query = query.contains('specialties', [selectedSpecialty]);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      setGarages(data || []);
+    } catch (error) {
+      console.error('Error fetching filtered garages:', error);
     }
+  };
 
-    if (selectedSpecialty) {
-      results = results.filter(garage =>
-        garage.specialties.includes(selectedSpecialty)
-      );
-    }
-
-    return results;
-  }, [garages, selectedGouvernorat, selectedSpecialty]);
+  const filteredGarages = garages;
 
   const clearFilters = () => {
     setSelectedGouvernorat('');

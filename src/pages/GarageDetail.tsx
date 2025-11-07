@@ -37,31 +37,35 @@ const GarageDetail: React.FC = () => {
     try {
       setLoading(true);
 
-      const { data: garageData, error: garageError } = await supabase
-        .from('garages')
-        .select('*')
-        .eq('id', id)
-        .maybeSingle();
+      const [garageResponse, similarResponse] = await Promise.all([
+        supabase
+          .from('garages')
+          .select('id, name, description, gouvernorat, address, phone, email, opening_hours, rating, specialties, brands, website, image_url')
+          .eq('id', id)
+          .maybeSingle(),
+        supabase
+          .from('garages')
+          .select('id, name, description, gouvernorat, address, phone, email, opening_hours, rating, specialties, brands, image_url')
+          .neq('id', id)
+          .order('rating', { ascending: false })
+          .limit(10)
+      ]);
 
-      if (garageError) throw garageError;
+      if (garageResponse.error) throw garageResponse.error;
 
-      if (!garageData) {
+      if (!garageResponse.data) {
         navigate('/garages');
         return;
       }
 
-      setGarage(garageData);
+      setGarage(garageResponse.data);
 
-      const { data: similarData, error: similarError } = await supabase
-        .from('garages')
-        .select('*')
-        .eq('gouvernorat', garageData.gouvernorat)
-        .neq('id', id)
-        .order('rating', { ascending: false })
-        .limit(3);
-
-      if (similarError) throw similarError;
-      setSimilarGarages(similarData || []);
+      if (!similarResponse.error && similarResponse.data) {
+        const filtered = similarResponse.data.filter(
+          g => g.gouvernorat === garageResponse.data.gouvernorat
+        ).slice(0, 3);
+        setSimilarGarages(filtered);
+      }
     } catch (error) {
       console.error('Error fetching garage details:', error);
     } finally {

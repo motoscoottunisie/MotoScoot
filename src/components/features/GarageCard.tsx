@@ -21,10 +21,11 @@ const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
       className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
     >
       {garage.image_url && (
-        <div className="h-48 overflow-hidden">
+        <div className="h-48 overflow-hidden bg-gray-200">
           <img
             src={garage.image_url}
             alt={garage.name}
+            loading="lazy"
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
           />
         </div>
