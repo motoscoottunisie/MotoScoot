@@ -7,6 +7,7 @@ import SearchResults from './pages/SearchResults';
 import ListingDetail from './pages/ListingDetail';
 import DepositListing from './pages/DepositListing';
 import Dashboard from './pages/Dashboard';
+import { Actualites } from './pages/Actualites';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/listing/:id" element={<ListingDetail />} />
             <Route path="/deposit" element={<DepositListing />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/actualites" element={<Actualites />} />
             <Route path="/favorites" element={<div className="p-8 text-center">Page Favoris - À développer</div>} />
             <Route path="/messages" element={<div className="p-8 text-center">Page Messages - À développer</div>} />
           </Routes>
