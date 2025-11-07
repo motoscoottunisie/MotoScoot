@@ -3,6 +3,8 @@ import { Upload, X, Check } from 'lucide-react';
 import Breadcrumb from '../components/Breadcrumb';
 import { mockListings } from '../data/mockData';
 import CheckboxPill from '../components/ui/CheckboxPill';
+import Notification from '../components/ui/Notification';
+import { fireConfetti } from '../utils/confetti';
 
 const DepositListing = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -25,6 +27,7 @@ const DepositListing = () => {
   const [customBrand, setCustomBrand] = useState('');
   const [modelSuggestions, setModelSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const steps = [
     { number: 1, title: 'Type de véhicule', description: 'Catégorie et marque' },
@@ -318,11 +321,19 @@ const DepositListing = () => {
   };
 
   const handleSubmit = () => {
-    alert('Annonce déposée avec succès !');
+    setShowNotification(true);
+    fireConfetti();
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {showNotification && (
+        <Notification
+          message="Annonce déposée avec succès !"
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
       {/* Hero Section */}
       <section className="relative text-white min-h-[50vh] flex items-center overflow-hidden">
         {/* Background Image */}
