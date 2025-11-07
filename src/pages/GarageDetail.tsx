@@ -116,11 +116,11 @@ const GarageDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <section className="relative text-white min-h-[50vh] lg:min-h-[60vh] flex items-center overflow-hidden">
+      <section className="relative text-white min-h-[67vh] lg:min-h-[73vh] flex items-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
           style={{
-            backgroundImage: garage.image_url ? `url(${garage.image_url})` : 'url(/hero-background.webp)',
+            backgroundImage: 'url(/hero-background.webp)',
           }}
         />
 
@@ -128,14 +128,14 @@ const GarageDetail: React.FC = () => {
           className="absolute inset-0"
           style={{
             backgroundColor: '#E65100',
-            opacity: 0.90,
+            opacity: 0.95,
             mixBlendMode: 'multiply',
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <button
             onClick={handleBack}
             className="inline-flex items-center space-x-2 text-white/90 hover:text-white mb-6 transition-colors"
@@ -144,50 +144,60 @@ const GarageDetail: React.FC = () => {
             <span>Retour aux garages</span>
           </button>
 
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-            <div className="flex-1">
-              <h1 className="text-4xl lg:text-6xl font-bold mb-4 drop-shadow-lg">
-                {garage.name}
-              </h1>
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
+            {garage.name}
+            <br />
+            {garage.rating > 0 && (
+              <span className="text-orange-200">
+                <Star size={32} className="inline text-yellow-400 fill-yellow-400 mr-2" />
+                {garage.rating.toFixed(1)}/5
+              </span>
+            )}
+          </h1>
 
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                {garage.rating > 0 && (
-                  <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                    <Star size={24} className="text-yellow-400 fill-yellow-400" />
-                    <span className="text-2xl font-bold">{garage.rating.toFixed(1)}</span>
-                    <span className="text-white/80">/5</span>
-                  </div>
-                )}
+          <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto mb-8">
+            {garage.description}
+          </p>
 
-                <div className="flex items-center space-x-2 text-orange-100">
-                  <MapPin size={20} />
-                  <span className="text-lg">{garage.gouvernorat}</span>
-                </div>
-              </div>
-
-              <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl">
-                {garage.description}
-              </p>
+          <div className="flex flex-wrap gap-3 justify-center mb-6">
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <MapPin size={20} />
+              <span className="font-medium">{garage.gouvernorat}</span>
             </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => setIsFavorite(!isFavorite)}
-                className={`p-3 rounded-lg backdrop-blur-sm transition-all ${
-                  isFavorite
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white/10 text-white hover:bg-white/20'
-                }`}
-              >
-                <Heart size={24} className={isFavorite ? 'fill-current' : ''} />
-              </button>
-              <button
-                onClick={handleShare}
-                className="p-3 rounded-lg bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all"
-              >
-                <Share2 size={24} />
-              </button>
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <Clock size={20} />
+              <span className="font-medium">{garage.opening_hours}</span>
             </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${garage.phone}`}
+              className="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
+            >
+              <Phone size={20} />
+              Appeler
+            </a>
+            {garage.email && (
+              <a
+                href={`mailto:${garage.email}`}
+                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors inline-flex items-center justify-center gap-2"
+              >
+                <Mail size={20} />
+                Envoyer un email
+              </a>
+            )}
+            <button
+              onClick={() => setIsFavorite(!isFavorite)}
+              className={`border-2 px-8 py-3 rounded-lg font-semibold transition-colors inline-flex items-center justify-center gap-2 ${
+                isFavorite
+                  ? 'bg-red-500 border-red-500 text-white hover:bg-red-600'
+                  : 'border-white text-white hover:bg-white hover:text-orange-600'
+              }`}
+            >
+              <Heart size={20} className={isFavorite ? 'fill-current' : ''} />
+              {isFavorite ? 'Enregistré' : 'Enregistrer'}
+            </button>
           </div>
         </div>
       </section>
