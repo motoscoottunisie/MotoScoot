@@ -82,17 +82,38 @@ const ListingDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="hover:text-orange-600 cursor-pointer">Recherche</span>
+      <section className="relative text-white min-h-[40vh] lg:min-h-[45vh] flex items-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
+          style={{
+            backgroundImage: 'url(/hero-background.webp)',
+          }}
+        />
+
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: '#E65100',
+            opacity: 0.95,
+            mixBlendMode: 'multiply',
+          }}
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+          <div className="flex items-center gap-2 text-sm text-white/80 mb-4">
+            <span className="hover:text-white cursor-pointer">Recherche</span>
             <span>/</span>
-            <span className="hover:text-orange-600 cursor-pointer">{listing.brand}</span>
+            <span className="hover:text-white cursor-pointer">{listing.brand}</span>
             <span>/</span>
-            <span className="text-gray-900">{listing.title}</span>
+            <span className="text-white">{listing.model}</span>
           </div>
+          <h1 className="text-3xl lg:text-5xl font-bold drop-shadow-lg">
+            {listing.title}
+          </h1>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
