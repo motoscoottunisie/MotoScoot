@@ -1,15 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, User, Heart, Mail, Plus, Settings, FileText, ShoppingBag, HelpCircle, LogOut, Phone } from 'lucide-react';
+import { Menu, X, User, Heart, Mail, Plus, Settings, FileText, ShoppingBag, HelpCircle, LogOut, Phone } from 'lucide-react';
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -17,13 +15,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery);
-      setIsSearchOpen(false);
-    }
-  };
 
   const handleLogout = () => {
     setIsProfileDropdownOpen(false);
@@ -54,7 +45,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
-        setIsSearchOpen(false);
         setIsMenuOpen(false);
       } else if (currentScrollY < lastScrollY) {
         setIsVisible(true);
@@ -132,13 +122,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                 </Link>
 
                 <div className="w-px h-6 bg-gray-300 mx-2"></div>
-                <button
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="p-2 bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-300 rounded-xl hover:scale-105"
-                  aria-label="Rechercher"
-                >
-                  <Search size={18} />
-                </button>
 
                 <Link
                   to="/deposit"
@@ -214,29 +197,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
               </button>
             </div>
 
-            {/* Search Bar Section - Appears when search icon is clicked (Desktop only) */}
-            {isSearchOpen && (
-              <div className="hidden md:block mt-4 animate-in fade-in slide-in-from-top-2 duration-200">
-                <form onSubmit={handleSearchSubmit} className="relative w-full">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Rechercher..."
-                    className="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-300"
-                    aria-label="Rechercher"
-                    autoFocus
-                  />
-                  <button
-                    type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-600 hover:text-orange-600 transition-all duration-300 hover:scale-110"
-                    aria-label="Lancer la recherche"
-                  >
-                    <Search size={20} />
-                  </button>
-                </form>
-              </div>
-            )}
 
             {/* Mobile Menu */}
             {isMenuOpen && (
