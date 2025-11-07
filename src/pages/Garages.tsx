@@ -120,6 +120,39 @@ const Garages: React.FC = () => {
           <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto mb-8">
             Trouvez les meilleurs professionnels pour l'entretien et la réparation de votre moto ou scooter
           </p>
+
+          {/* Search Bar */}
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg p-3 flex flex-col sm:flex-row gap-3">
+              <div className="flex-1 relative">
+                <select
+                  value={selectedSpecialty}
+                  onChange={(e) => setSelectedSpecialty(e.target.value)}
+                  className="w-full pl-10 pr-3 py-3 text-gray-900 border-0 focus:ring-2 focus:ring-orange-300 focus:outline-none rounded-lg appearance-none bg-gray-50"
+                >
+                  <option value="">Toutes les spécialités</option>
+                  {specialties.map(specialty => (
+                    <option key={specialty} value={specialty}>{specialty}</option>
+                  ))}
+                </select>
+                <Wrench size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+              </div>
+
+              <div className="flex-1 relative">
+                <select
+                  value={selectedGouvernorat}
+                  onChange={(e) => setSelectedGouvernorat(e.target.value)}
+                  className="w-full pl-10 pr-3 py-3 text-gray-900 border-0 focus:ring-2 focus:ring-orange-300 focus:outline-none rounded-lg appearance-none bg-gray-50"
+                >
+                  <option value="">Tous les gouvernorats</option>
+                  {gouvernorats.map(gov => (
+                    <option key={gov} value={gov}>{gov}</option>
+                  ))}
+                </select>
+                <MapPin size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
