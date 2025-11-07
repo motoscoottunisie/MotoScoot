@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MapPin, Search, Wrench, Filter } from 'lucide-react';
+import { MapPin, Search, Filter, Wrench } from 'lucide-react';
 import GarageCard from '../components/features/GarageCard';
 import { Garage } from '../types/garage';
 import { supabase } from '../lib/supabase';
@@ -108,9 +108,6 @@ const Garages: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
-          <div className="flex justify-center mb-4">
-            <Wrench size={48} className="text-orange-200" />
-          </div>
           <h1 className="text-3xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
             Garages & Ateliers
           </h1>
