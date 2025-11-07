@@ -49,4 +49,5 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   );
 };
 
+export { Breadcrumb };
 export default Breadcrumb;

@@ -107,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                   Annonces
                 </Link>
                 <Link
-                  to="/actualites"
+                  to="/news"
                   className="text-gray-700 hover:text-orange-600 font-medium transition-colors duration-300 px-3"
                 >
                   Actualités
@@ -250,7 +250,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                     Annonces
                   </Link>
                   <Link
-                    to="/actualites"
+                    to="/news"
                     className="text-gray-700 hover:text-orange-600 font-medium py-2 px-4 rounded-xl hover:bg-gray-100 transition-all duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
