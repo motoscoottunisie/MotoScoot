@@ -101,8 +101,8 @@ const ListingDetail = () => {
 
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-          <div className="flex items-center gap-2 text-sm text-white/80 mb-4">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full text-center">
+          <div className="flex items-center justify-center gap-2 text-sm text-white/80 mb-4">
             <span className="hover:text-white cursor-pointer">Recherche</span>
             <span>/</span>
             <span className="hover:text-white cursor-pointer">{listing.brand}</span>
