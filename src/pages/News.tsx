@@ -14,7 +14,7 @@ const News: React.FC = () => {
   const featuredArticle = mockArticles.find(article => article.featured);
 
   const filteredArticles = useMemo(() => {
-    return mockArticless
+    return mockArticles
       .filter(article => !article.featured)
       .filter(article => {
         const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
