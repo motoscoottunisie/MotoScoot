@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -12,26 +11,24 @@ import News from './pages/News';
 
 function App() {
   return (
-    <HelmetProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-          <Header />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<SearchResults />} />
-              <Route path="/listing/:id" element={<ListingDetail />} />
-              <Route path="/deposit" element={<DepositListing />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/favorites" element={<div className="p-8 text-center">Page Favoris - À développer</div>} />
-              <Route path="/messages" element={<div className="p-8 text-center">Page Messages - À développer</div>} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </HelmetProvider>
+    <Router>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/listing/:id" element={<ListingDetail />} />
+            <Route path="/deposit" element={<DepositListing />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/favorites" element={<div className="p-8 text-center">Page Favoris - À développer</div>} />
+            <Route path="/messages" element={<div className="p-8 text-center">Page Messages - À développer</div>} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
