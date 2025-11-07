@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import ListingDetail from './pages/ListingDetail';
@@ -14,6 +15,7 @@ import GarageDetail from './pages/GarageDetail';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <a
           href="#main-content"
