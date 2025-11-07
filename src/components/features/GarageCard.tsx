@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Star, Clock, ExternalLink, Wrench } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Garage } from '../../types/garage';
 import Badge from '../ui/Badge';
 
@@ -8,8 +9,17 @@ interface GarageCardProps {
 }
 
 const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/garage/${garage.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+    <div
+      onClick={handleCardClick}
+      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
+    >
       {garage.image_url && (
         <div className="h-48 overflow-hidden">
           <img
