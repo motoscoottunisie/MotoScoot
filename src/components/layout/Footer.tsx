@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Youtube, ExternalLink } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 const Footer: React.FC = () => {
@@ -155,17 +155,6 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
               ))}
-              <li>
-                <a
-                  href="https://www.figma.com/design/design-system-magma-studio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm hover:text-orange-500 transition-colors duration-200 inline-flex items-center gap-1.5 hover:translate-x-1 transform"
-                >
-                  <span>Système de design</span>
-                  <ExternalLink size={14} className="opacity-60" />
-                </a>
-              </li>
             </ul>
           </div>
         </div>
