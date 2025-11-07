@@ -28,7 +28,7 @@ const News: React.FC = () => {
     <>
       <div className="min-h-screen bg-gray-50">
         <div
-          className="relative height: '65vh' bg-cover bg-center flex items-center"
+          className="relative h-100 bg-cover bg-center flex items-center"
           style={{ backgroundImage: 'url(/hero-background.webp)' }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/50" />
