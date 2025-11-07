@@ -88,7 +88,8 @@ const Garages: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative text-white min-h-[50vh] flex items-center overflow-hidden">
+      <section className="relative text-white min-h-[67vh] lg:min-h-[73vh] flex items-center overflow-hidden">
+        {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
           style={{
@@ -96,6 +97,7 @@ const Garages: React.FC = () => {
           }}
         />
 
+        {/* Orange Overlay with Blend Mode */}
         <div
           className="absolute inset-0"
           style={{
@@ -105,13 +107,17 @@ const Garages: React.FC = () => {
           }}
         />
 
+        {/* Additional subtle overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
-          <h1 className="text-3xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
             Garages & Ateliers
+            <br />
+            <span className="text-orange-200">Professionnels de confiance</span>
           </h1>
-          <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto">
+
+          <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto mb-8">
             Trouvez les meilleurs professionnels pour l'entretien et la réparation de votre moto ou scooter
           </p>
         </div>
