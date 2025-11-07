@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MapPin, Search, Filter, Wrench } from 'lucide-react';
+import { MapPin, Wrench } from 'lucide-react';
 import GarageCard from '../components/features/GarageCard';
 import { Garage } from '../types/garage';
 import { supabase } from '../lib/supabase';
@@ -8,7 +8,6 @@ const Garages: React.FC = () => {
   const [garages, setGarages] = useState<Garage[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedGouvernorat, setSelectedGouvernorat] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('');
 
   const gouvernorats = [
@@ -64,23 +63,12 @@ const Garages: React.FC = () => {
       );
     }
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      results = results.filter(garage =>
-        garage.name.toLowerCase().includes(query) ||
-        garage.description.toLowerCase().includes(query) ||
-        garage.brands.some(brand => brand.toLowerCase().includes(query)) ||
-        garage.specialties.some(specialty => specialty.toLowerCase().includes(query))
-      );
-    }
-
     return results;
-  }, [garages, selectedGouvernorat, selectedSpecialty, searchQuery]);
+  }, [garages, selectedGouvernorat, selectedSpecialty]);
 
   const clearFilters = () => {
     setSelectedGouvernorat('');
     setSelectedSpecialty('');
-    setSearchQuery('');
   };
 
   const activeFiltersCount = [selectedGouvernorat, selectedSpecialty].filter(Boolean).length;
@@ -157,91 +145,6 @@ const Garages: React.FC = () => {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters Section */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <Filter size={20} className="text-orange-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Filtres</h2>
-            {activeFiltersCount > 0 && (
-              <span className="bg-orange-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                {activeFiltersCount}
-              </span>
-            )}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Search */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Rechercher
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Nom, marque, spécialité..."
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                />
-                <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              </div>
-            </div>
-
-            {/* Location Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Gouvernorat
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedGouvernorat}
-                  onChange={(e) => setSelectedGouvernorat(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none"
-                >
-                  <option value="">Tous les gouvernorats</option>
-                  {gouvernorats.map(gov => (
-                    <option key={gov} value={gov}>{gov}</option>
-                  ))}
-                </select>
-                <MapPin size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-
-            {/* Specialty Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Spécialité
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedSpecialty}
-                  onChange={(e) => setSelectedSpecialty(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none"
-                >
-                  <option value="">Toutes les spécialités</option>
-                  {specialties.map(specialty => (
-                    <option key={specialty} value={specialty}>{specialty}</option>
-                  ))}
-                </select>
-                <Wrench size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-          </div>
-
-          {activeFiltersCount > 0 && (
-            <div className="mt-4 flex items-center justify-between pt-4 border-t border-gray-200">
-              <span className="text-sm text-gray-600">
-                {filteredGarages.length} garage{filteredGarages.length !== 1 ? 's' : ''} trouvé{filteredGarages.length !== 1 ? 's' : ''}
-              </span>
-              <button
-                onClick={clearFilters}
-                className="text-sm text-orange-600 hover:text-orange-700 font-medium"
-              >
-                Effacer les filtres
-              </button>
-            </div>
-          )}
-        </div>
 
         {/* Results Header */}
         <div className="mb-6">
