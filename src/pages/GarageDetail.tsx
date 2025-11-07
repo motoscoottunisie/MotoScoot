@@ -150,13 +150,6 @@ const GarageDetail: React.FC = () => {
 
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
             {garage.name}
-            <br />
-            {garage.rating > 0 && (
-              <span className="text-orange-200">
-                <Star size={32} className="inline text-yellow-400 fill-yellow-400 mr-2" />
-                {garage.rating.toFixed(1)}/5
-              </span>
-            )}
           </h1>
 
           <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto mb-8">
