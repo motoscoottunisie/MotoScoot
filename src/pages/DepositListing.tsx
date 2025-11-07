@@ -323,12 +323,38 @@ const DepositListing = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Breadcrumb items={[{ label: 'Déposer une annonce' }]} />
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">Déposer une annonce</h1>
+      {/* Hero Section */}
+      <section className="relative text-white min-h-[50vh] flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
+          style={{
+            backgroundImage: 'url(/hero-background.webp)',
+          }}
+        />
+
+        {/* Orange Overlay with Blend Mode */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: '#E65100',
+            opacity: 0.95,
+            mixBlendMode: 'multiply',
+          }}
+        />
+
+        {/* Additional subtle overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
+            Déposer une annonce
+          </h1>
+          <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md">
+            Vendez votre moto ou scooter facilement
+          </p>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
