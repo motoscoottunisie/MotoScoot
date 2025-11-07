@@ -10,7 +10,6 @@ const Footer: React.FC = () => {
     { label: 'Accueil', path: '/' },
     { label: 'Motos', path: '/search?category=motos' },
     { label: 'Scooters', path: '/search?category=scooters' },
-    { label: 'Actualités', path: '/news' },
     { label: 'Vendre un véhicule', path: '/deposit' },
     { label: 'Promotions', path: '/deals' },
   ];
@@ -49,29 +48,6 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#0F0F0F] text-gray-400">
-      <div className="bg-gradient-to-r from-orange-600 to-orange-700 py-12 sm:py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
-            Vendez votre moto aujourd'hui
-          </h2>
-          <p className="text-lg sm:text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-            Trouvez votre prochaine moto ou déposez une annonce gratuitement
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/deposit">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto shadow-lg hover:shadow-xl">
-                Déposer une annonce
-              </Button>
-            </Link>
-            <Link to="/search">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg hover:shadow-xl">
-                Parcourir les annonces
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           <div className="space-y-6">
