@@ -328,7 +328,7 @@ const SearchResults: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Results Header */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <section aria-label="Search results summary" className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div className="mb-4 lg:mb-0">
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -428,9 +428,10 @@ const SearchResults: React.FC = () => {
               </div>
             </div>
           )}
-        </div>
+        </section>
 
         {/* Results Grid/List */}
+        <section aria-label="Search results listings">
         {filteredListings.length > 0 ? (
           <div className={
             viewMode === 'grid' 
@@ -474,11 +475,12 @@ const SearchResults: React.FC = () => {
             </div>
           </div>
         )}
+        </section>
 
         {/* Quick Stats Bar (if results exist) */}
         {filteredListings.length > 0 && priceStats && (
-          <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Statistiques de recherche</h3>
+          <aside role="complementary" aria-labelledby="stats-heading" className="mt-8 bg-white rounded-lg shadow-sm p-6">
+            <h3 id="stats-heading" className="text-sm font-semibold text-gray-700 mb-4">Statistiques de recherche</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-600">{filteredListings.length}</div>
@@ -497,7 +499,7 @@ const SearchResults: React.FC = () => {
                 <div className="text-sm text-gray-600">Prix maximum</div>
               </div>
             </div>
-          </div>
+          </aside>
         )}
       </div>
     </div>

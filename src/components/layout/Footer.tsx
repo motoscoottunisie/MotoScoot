@@ -47,10 +47,10 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-[#0F0F0F] text-gray-400">
+    <footer role="contentinfo" className="bg-[#0F0F0F] text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
-          <div className="space-y-6">
+          <div className="space-y-6" aria-label="Company information">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                 <span className="text-white font-bold text-lg">M</span>
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div>
+          <nav aria-label="Quick links">
             <h3 className="text-white font-semibold text-base mb-5 uppercase tracking-wide">
               Liens rapides
             </h3>
@@ -97,9 +97,9 @@ const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
+          <nav aria-label="Support links">
             <h3 className="text-white font-semibold text-base mb-5 uppercase tracking-wide">
               Support
             </h3>
@@ -115,9 +115,9 @@ const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
+          <nav aria-label="Legal and resources">
             <h3 className="text-white font-semibold text-base mb-5 uppercase tracking-wide">
               Légal & Ressources
             </h3>
@@ -133,7 +133,7 @@ const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
 
         <div className="border-t border-white/10 pt-8">

@@ -96,10 +96,10 @@ const Home: React.FC = () => {
       <MarketplaceCards />
 
       {/* Featured Listings */}
-      <section className="py-16 bg-gray-50">
+      <section aria-labelledby="featured-heading" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 id="featured-heading" className="text-3xl font-bold text-gray-900">
               Annonces à la une
             </h2>
             <Link
@@ -119,10 +119,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section aria-labelledby="stats-heading" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 id="stats-heading" className="text-3xl font-bold text-gray-900 mb-4">
               Une communauté de confiance
             </h2>
             <p className="text-xl text-gray-600">
@@ -149,9 +149,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-orange-600 to-orange-700 text-white">
+      <section aria-labelledby="cta-heading" className="py-16 bg-gradient-to-r from-orange-600 to-orange-700 text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 id="cta-heading" className="text-3xl font-bold mb-4">
             Prêt à vendre votre moto ?
           </h2>
           <p className="text-xl mb-8 text-orange-100">

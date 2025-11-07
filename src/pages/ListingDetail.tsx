@@ -329,7 +329,7 @@ const ListingDetail = () => {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <aside role="complementary" aria-label="Seller information and actions" className="space-y-6">
             <div className="sticky top-6 space-y-6">
             <article className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200">
               <div className="flex items-start gap-4 mb-6">
@@ -505,11 +505,11 @@ const ListingDetail = () => {
               </div>
             </div>
             </div>
-          </div>
+          </aside>
         </div>
 
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Annonces similaires</h2>
+        <section aria-labelledby="similar-listings-heading" className="mt-12">
+          <h2 id="similar-listings-heading" className="text-2xl font-bold text-gray-900 mb-6">Annonces similaires</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {similarListings.map((item) => (
               <div key={item.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
@@ -532,10 +532,10 @@ const ListingDetail = () => {
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </div>
 
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4">
+      <nav aria-label="Quick actions" className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4">
         <div className="flex items-center justify-between gap-4">
           <div className="text-2xl font-bold text-orange-600">
             {listing.price.toLocaleString('fr-FR')} €
@@ -544,7 +544,7 @@ const ListingDetail = () => {
             Contacter
           </button>
         </div>
-      </div>
+      </nav>
     </div>
   );
 };

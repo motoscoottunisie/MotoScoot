@@ -75,8 +75,9 @@ export const Actualites: React.FC = () => {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-16">
+        <section aria-label="Article filters and results">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 id="articles-heading" className="text-3xl font-bold text-gray-900">
             {selectedCategory ? `Catégorie : ${selectedCategory}` : 'Tous les articles'}
           </h2>
 
@@ -120,10 +121,11 @@ export const Actualites: React.FC = () => {
             ))}
           </div>
         )}
+        </section>
 
-        <div className="mt-16">
+        <aside role="complementary" aria-label="Advertisements" className="mt-16">
           <AdsBanner />
-        </div>
+        </aside>
       </div>
     </div>
   );

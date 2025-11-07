@@ -31,13 +31,15 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const activeFiltersCount = Object.values(filters).filter(value => value !== undefined && value !== '').length;
 
   return (
-    <div className="bg-white border-b border-gray-200">
+    <aside role="complementary" aria-label="Search filters" className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filter Toggle */}
         <div className="flex items-center justify-between py-4">
           <button
             onClick={onToggle}
             className="flex items-center space-x-2 text-gray-700 hover:text-orange-600 transition-colors"
+            aria-expanded={isOpen}
+            aria-controls="filters-panel"
           >
             <Filter size={20} />
             <span className="font-medium">Filtres</span>
@@ -47,7 +49,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
               </span>
             )}
           </button>
-          
+
           {activeFiltersCount > 0 && (
             <button
               onClick={clearFilters}
@@ -60,7 +62,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
 
         {/* Filters Panel */}
         {isOpen && (
-          <div className="pb-6 border-t border-gray-100">
+          <div id="filters-panel" className="pb-6 border-t border-gray-100">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
               {/* Category */}
               <div>
@@ -198,7 +200,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </aside>
   );
 };
 
