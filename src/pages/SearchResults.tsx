@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Grid2x2 as Grid, List, SlidersHorizontal, MapPin, Calendar, Gauge, Fuel, Cog, X } from 'lucide-react';
+import { Grid2x2 as Grid, List, SlidersHorizontal, MapPin, Calendar, Gauge, Fuel, Cog, X, Search } from 'lucide-react';
 import ListingCard from '../components/features/ListingCard';
 import SearchFiltersComponent from '../components/features/SearchFilters';
 import { mockListings } from '../data/mockData';
@@ -33,7 +33,17 @@ const SearchResults: React.FC = () => {
     color: searchParams.get('color') || undefined,
   });
 
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const query = searchParams.get('q') || '';
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      const params = new URLSearchParams(searchParams);
+      params.set('q', searchQuery);
+      setSearchParams(params);
+    }
+  };
 
   // Update URL when filters change
   useEffect(() => {
@@ -258,6 +268,56 @@ const SearchResults: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative text-white min-h-[50vh] flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
+          style={{
+            backgroundImage: 'url(/hero-background.webp)',
+          }}
+        />
+
+        {/* Orange Overlay with Blend Mode */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: '#E65100',
+            opacity: 0.95,
+            mixBlendMode: 'multiply',
+          }}
+        />
+
+        {/* Additional subtle overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-6 drop-shadow-lg">
+            Rechercher votre moto
+          </h1>
+
+          {/* Search Bar */}
+          <div className="max-w-3xl mx-auto">
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Recherche..."
+                className="w-full pl-6 pr-14 py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+                aria-label="Rechercher"
+              >
+                <Search size={24} />
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
       {/* Filters Sidebar */}
       <SearchFiltersComponent
         filters={filters}
