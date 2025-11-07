@@ -10,6 +10,7 @@ const Footer: React.FC = () => {
     { label: 'Accueil', path: '/' },
     { label: 'Motos', path: '/search?category=motos' },
     { label: 'Scooters', path: '/search?category=scooters' },
+    { label: 'Actualités', path: '/news' },
     { label: 'Vendre un véhicule', path: '/deposit' },
     { label: 'Promotions', path: '/deals' },
   ];
