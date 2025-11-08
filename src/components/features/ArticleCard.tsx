@@ -12,7 +12,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
     <Link
       to={`/actualites/${article.slug}`}
-      className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+      className="group block bg-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 transform hover:-translate-y-2"
     >
       <div className="relative overflow-hidden aspect-[16/10]">
         <img

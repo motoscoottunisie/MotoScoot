@@ -21,7 +21,7 @@ const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
   return (
     <div
       onClick={handleCardClick}
-      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
+      className="bg-white rounded-lg shadow-sm transition-shadow overflow-hidden cursor-pointer"
     >
       <div className="h-48 overflow-hidden bg-gray-200 relative">
         {!isLoaded && !hasError && <ImageSkeleton />}

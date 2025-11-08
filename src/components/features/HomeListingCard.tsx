@@ -30,7 +30,7 @@ const HomeListingCard: React.FC<HomeListingCardProps> = ({ listing, onToggleFavo
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
       <Link to={`/listing/${listing.id}`}>
-        <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+        <div className="relative aspect-square overflow-hidden bg-gray-100">
           {!hasError ? (
             <>
               <img
@@ -76,16 +76,17 @@ const HomeListingCard: React.FC<HomeListingCardProps> = ({ listing, onToggleFavo
         </div>
       </Link>
 
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col flex-grow relative">
+        <div className="absolute -top-12 right-3 z-10 text-2xl font-bold text-red-600 bg-white px-3 py-1.5 rounded-lg shadow-md">
+          {formatPrice(listing.price)}
+        </div>
+
         <div className="mb-3">
           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors leading-snug">
             <Link to={`/listing/${listing.id}`} className="hover:underline">
               {listing.brand} {listing.model}
             </Link>
           </h3>
-          <div className="text-2xl font-bold text-orange-600">
-            {formatPrice(listing.price)}
-          </div>
         </div>
 
         <div className="space-y-2.5 mb-4 flex-grow">

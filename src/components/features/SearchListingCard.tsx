@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, MapPin, Calendar, Gauge, MessageCircle, User } from 'lucide-react';
+import { Heart, MapPin, Calendar, Gauge, MessageCircle, User, Phone } from 'lucide-react';
 import { Listing } from '../../types';
 import { formatPrice, formatNumber } from '../../utils/format';
 import { useImageLoader } from '../../hooks/useImageLoader';
@@ -31,11 +31,15 @@ const SearchListingCard: React.FC<SearchListingCardProps> = ({ listing, onToggle
 
   return (
     <article
-      className="bg-white rounded-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:shadow-lg hover:border-gray-300 group flex"
+      className="bg-white rounded-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:border-gray-300 group flex"
       role="article"
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
-      <Link to={`/listing/${listing.id}`} className="flex w-full">
+      <Link to={`/listing/${listing.id}`} className="flex w-full relative">
+        <div className="absolute top-4 right-4 z-10 text-2xl font-bold text-red-600 bg-white px-3 py-1.5 rounded-lg shadow-md">
+          {formatPrice(listing.price)}
+        </div>
+
         <div className="relative w-[250px] h-[180px] flex-shrink-0 overflow-hidden bg-gray-100">
           {!hasError ? (
             <>
@@ -68,13 +72,9 @@ const SearchListingCard: React.FC<SearchListingCardProps> = ({ listing, onToggle
 
         <div className="flex-1 p-4 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+            <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
               {listing.brand} {listing.model}
             </h3>
-
-            <div className="text-2xl font-bold text-red-600 mb-3">
-              {formatPrice(listing.price)}
-            </div>
 
             <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-2">
               {listing.category !== 'accessoires' && (
@@ -140,6 +140,13 @@ const SearchListingCard: React.FC<SearchListingCardProps> = ({ listing, onToggle
             </div>
 
             <div className="flex gap-2 ml-3">
+              <button
+                onClick={handleContact}
+                className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                aria-label="Appeler le vendeur"
+              >
+                <Phone size={18} strokeWidth={2} />
+              </button>
               <button
                 onClick={handleContact}
                 className="p-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
