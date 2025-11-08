@@ -134,16 +134,16 @@ const SearchResults: React.FC = () => {
       {/* Main Content - 2 Columns Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Sidebar - 30% */}
-          <aside className="lg:col-span-4">
+          {/* Sidebar - 25% */}
+          <aside className="lg:col-span-3">
             <SearchFiltersComponent
               filters={filters}
               onFiltersChange={setFilters}
             />
           </aside>
 
-          {/* Main Content - 70% */}
-          <main className="lg:col-span-8">
+          {/* Main Content - 75% */}
+          <main className="lg:col-span-9">
             {/* Results Header */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
