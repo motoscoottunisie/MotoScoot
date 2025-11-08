@@ -7,12 +7,12 @@ import { useImageLoader } from '../../hooks/useImageLoader';
 import { ImagePlaceholder, ImageSkeleton } from '../ui/ImagePlaceholder';
 import { Badge } from '../ui/Badge';
 
-interface ListingCardProps {
+interface HomeListingCardProps {
   listing: Listing;
   onToggleFavorite?: (id: string) => void;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) => {
+const HomeListingCard: React.FC<HomeListingCardProps> = ({ listing, onToggleFavorite }) => {
   const { isLoaded, hasError, handleLoad, handleError } = useImageLoader();
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
@@ -23,16 +23,14 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
     }
   };
 
-
   return (
-    <article 
+    <article
       className="bg-white rounded-2xl transition-all duration-300 overflow-hidden border border-gray-200 group flex flex-col h-full"
       role="article"
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
       <Link to={`/listing/${listing.id}`}>
-        {/* Image Container */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+        <div className="relative aspect-square overflow-hidden bg-gray-100">
           {!hasError ? (
             <>
               <img
@@ -54,20 +52,21 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
           ) : (
             <ImagePlaceholder />
           )}
-          
-          {/* Favorite Button */}
-          <button
-            onClick={handleToggleFavorite}
-            className={`absolute top-3 right-3 p-2.5 rounded-full backdrop-blur-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
-              listing.isFavorite 
-                ? 'bg-red-500 text-white shadow-lg hover:bg-red-600 hover:scale-110' 
-                : 'bg-white/90 text-gray-700 hover:bg-white hover:text-red-500 hover:scale-110 shadow-md'
-            }`}
-            aria-label={listing.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-            aria-pressed={listing.isFavorite}
-          >
-            <Heart size={18} className={listing.isFavorite ? 'fill-current' : ''} strokeWidth={2} />
-          </button>
+
+          {onToggleFavorite && (
+            <button
+              onClick={handleToggleFavorite}
+              className={`absolute top-3 right-3 p-2.5 rounded-full backdrop-blur-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
+                listing.isFavorite
+                  ? 'bg-red-500 text-white shadow-lg hover:bg-red-600 hover:scale-110'
+                  : 'bg-white/90 text-gray-700 hover:bg-white hover:text-red-500 hover:scale-110 shadow-md'
+              }`}
+              aria-label={listing.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+              aria-pressed={listing.isFavorite}
+            >
+              <Heart size={18} className={listing.isFavorite ? 'fill-current' : ''} strokeWidth={2} />
+            </button>
+          )}
 
           <div className="absolute bottom-3 left-3">
             <Badge className="backdrop-blur-sm shadow-lg">
@@ -77,21 +76,19 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
         </div>
       </Link>
 
-      {/* Content Container */}
-      <div className="p-5 flex flex-col flex-grow">
-        {/* Brand & Model */}
+      <div className="p-5 flex flex-col flex-grow relative">
+        <div className="absolute -top-12 right-3 z-10 text-2xl font-bold text-orange-600">
+          {formatPrice(listing.price)}
+        </div>
+
         <div className="mb-3">
           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors leading-snug">
             <Link to={`/listing/${listing.id}`} className="hover:underline">
               {listing.brand} {listing.model}
             </Link>
           </h3>
-          <div className="text-2xl font-bold text-orange-600">
-            {formatPrice(listing.price)}
-          </div>
         </div>
 
-        {/* Specifications */}
         <div className="space-y-2.5 mb-4 flex-grow">
           {listing.category !== 'accessoires' && (
             <div className="flex items-center gap-3 text-sm flex-wrap">
@@ -119,14 +116,13 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
               )}
             </div>
           )}
-          
+
           <div className="flex items-center gap-1.5 text-sm text-gray-600">
             <MapPin size={16} className="text-gray-400 flex-shrink-0" strokeWidth={2} />
             <span className="font-medium truncate">{listing.location}</span>
           </div>
         </div>
 
-        {/* Seller Info */}
         <div className="flex items-center justify-between gap-3 pt-4 border-t border-gray-200 mt-auto">
           <div className="flex-grow min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">{listing.sellerName}</p>
@@ -134,7 +130,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
               {listing.sellerType === 'professional' ? 'Vendeur professionnel' : 'Vendeur particulier'}
             </p>
           </div>
-          
+
           {listing.sellerType === 'professional' ? (
             listing.shopUrl && (
               <Link
@@ -168,4 +164,5 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
   );
 };
 
-export default ListingCard;
+export default HomeListingCard;
+s
