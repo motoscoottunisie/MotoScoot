@@ -36,7 +36,7 @@ const SearchListingCard: React.FC<SearchListingCardProps> = ({ listing, onToggle
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
       <Link to={`/listing/${listing.id}`} className="flex flex-col sm:flex-row w-full relative">
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 text-lg sm:text-xl md:text-2xl font-bold text-orange-600 bg-white/95 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg shadow-lg">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 text-lg sm:text-xl md:text-2xl font-bold text-orange-600 bg-white/95 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg">
           {formatPrice(listing.price)}
         </div>
 
