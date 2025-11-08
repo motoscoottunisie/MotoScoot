@@ -1,206 +1,294 @@
-import React from 'react';
-import { Filter } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { SearchFilters } from '../../types';
-import { CATEGORIES, BRANDS, CONDITIONS } from '../../constants/categories';
 
 interface SearchFiltersProps {
   filters: SearchFilters;
   onFiltersChange: (filters: SearchFilters) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
+
+const BRANDS = ['Honda', 'Yamaha', 'Kawasaki', 'Suzuki', 'BMW', 'Ducati', 'Triumph', 'KTM', 'Harley-Davidson'];
+const COLORS = ['Noir', 'Blanc', 'Rouge', 'Bleu', 'Vert', 'Jaune', 'Orange', 'Gris'];
+const TYPES = ['Sportive', 'Trail', 'Custom', 'Roadster', 'Routière'];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
   onFiltersChange,
-  isOpen,
-  onToggle
 }) => {
+  const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
+  const [models, setModels] = useState<string[]>([]);
 
-  const handleFilterChange = (key: keyof SearchFilters, value: any) => {
-    onFiltersChange({
-      ...filters,
+  const MODELS_BY_BRAND: Record<string, string[]> = {
+    'Honda': ['CL500', 'CB650R', 'Africa Twin', 'CBR600RR'],
+    'Yamaha': ['MT-07', 'YZF-R1', 'Tracer 9', 'XSR700'],
+    'Kawasaki': ['Ninja 650', 'Z900', 'Versys 650', 'ZX-10R'],
+    'Suzuki': ['GSX-R750', 'V-Strom 650', 'GSX-S750', 'Hayabusa'],
+    'BMW': ['R1250 GS', 'K1600 GT', 'S1000RR', 'F900R'],
+    'Ducati': ['Scrambler Icon', 'Monster', 'Panigale V4', 'Multistrada'],
+    'Triumph': ['Bonneville T120', 'Street Triple', 'Tiger 900', 'Speed Twin'],
+    'KTM': ['790 Adventure', '390 Duke', '890 Duke R', '1290 Super Duke'],
+    'Harley-Davidson': ['Street 750', 'Sportster', 'Road King', 'Fat Boy']
+  };
+
+  useEffect(() => {
+    if (localFilters.brand && MODELS_BY_BRAND[localFilters.brand]) {
+      setModels(MODELS_BY_BRAND[localFilters.brand]);
+    } else {
+      setModels([]);
+      if (localFilters.model) {
+        setLocalFilters(prev => ({ ...prev, model: undefined }));
+      }
+    }
+  }, [localFilters.brand]);
+
+  const handleChange = (key: keyof SearchFilters, value: any) => {
+    const newFilters = {
+      ...localFilters,
       [key]: value === '' ? undefined : value
-    });
+    };
+    setLocalFilters(newFilters);
   };
 
-  const clearFilters = () => {
-    onFiltersChange({});
+  const handleColorToggle = (color: string) => {
+    const currentColors = localFilters.colors || [];
+    const newColors = currentColors.includes(color)
+      ? currentColors.filter(c => c !== color)
+      : [...currentColors, color];
+    handleChange('colors', newColors.length > 0 ? newColors : undefined);
   };
 
-  const activeFiltersCount = Object.values(filters).filter(value => value !== undefined && value !== '').length;
+  const handleTypeToggle = (type: string) => {
+    const currentTypes = localFilters.types || [];
+    const newTypes = currentTypes.includes(type)
+      ? currentTypes.filter(t => t !== type)
+      : [...currentTypes, type];
+    handleChange('types', newTypes.length > 0 ? newTypes : undefined);
+  };
+
+  const applyFilters = () => {
+    onFiltersChange(localFilters);
+  };
+
+  const resetFilters = () => {
+    const emptyFilters: SearchFilters = {};
+    setLocalFilters(emptyFilters);
+    onFiltersChange(emptyFilters);
+  };
 
   return (
-    <aside role="complementary" aria-label="Search filters" className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Filter Toggle */}
-        <div className="flex items-center justify-between py-4">
-          <button
-            onClick={onToggle}
-            className="flex items-center space-x-2 text-gray-700 hover:text-orange-600 transition-colors"
-            aria-expanded={isOpen}
-            aria-controls="filters-panel"
-          >
-            <Filter size={20} />
-            <span className="font-medium">Filtres</span>
-            {activeFiltersCount > 0 && (
-              <span className="bg-orange-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {activeFiltersCount}
-              </span>
-            )}
-          </button>
+    <div className="bg-white rounded-lg shadow-sm p-6 sticky top-4">
+      <h2 className="text-xl font-bold text-gray-900 mb-6">Filtres de recherche</h2>
 
-          {activeFiltersCount > 0 && (
-            <button
-              onClick={clearFilters}
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              Effacer les filtres
-            </button>
-          )}
+      <div className="space-y-6">
+        {/* Marque */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Marque
+          </label>
+          <select
+            value={localFilters.brand || ''}
+            onChange={(e) => handleChange('brand', e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+          >
+            <option value="">Toutes les marques</option>
+            {BRANDS.map(brand => (
+              <option key={brand} value={brand}>{brand}</option>
+            ))}
+          </select>
         </div>
 
-        {/* Filters Panel */}
-        {isOpen && (
-          <div id="filters-panel" className="pb-6 border-t border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-              {/* Category */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Catégorie
-                </label>
-                <select
-                  value={filters.category || ''}
-                  onChange={(e) => handleFilterChange('category', e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                >
-                  <option value="">Toutes</option>
-                  {CATEGORIES.map(cat => (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Price Range */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Prix
-                </label>
-                <div className="flex space-x-2">
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={filters.priceMin || ''}
-                    onChange={(e) => handleFilterChange('priceMin', parseInt(e.target.value) || undefined)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    value={filters.priceMax || ''}
-                    onChange={(e) => handleFilterChange('priceMax', parseInt(e.target.value) || undefined)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                  />
-                </div>
-              </div>
-
-              {/* Year Range */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Année
-                </label>
-                <div className="flex space-x-2">
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={filters.yearMin || ''}
-                    onChange={(e) => handleFilterChange('yearMin', parseInt(e.target.value) || undefined)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    value={filters.yearMax || ''}
-                    onChange={(e) => handleFilterChange('yearMax', parseInt(e.target.value) || undefined)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                  />
-                </div>
-              </div>
-
-              {/* Brand */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Marque
-                </label>
-                <select
-                  value={filters.brand || ''}
-                  onChange={(e) => handleFilterChange('brand', e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                >
-                  <option value="">Toutes</option>
-                  {BRANDS.map(brand => (
-                    <option key={brand} value={brand}>
-                      {brand}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-              {/* Kilométrage */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Kilométrage max
-                </label>
-                <input
-                  type="number"
-                  placeholder="ex: 50000"
-                  value={filters.mileageMax || ''}
-                  onChange={(e) => handleFilterChange('mileageMax', parseInt(e.target.value) || undefined)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                />
-              </div>
-
-              {/* Location */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Localisation
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ville, département..."
-                  value={filters.location || ''}
-                  onChange={(e) => handleFilterChange('location', e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                />
-              </div>
-
-              {/* Condition */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  État
-                </label>
-                <select
-                  value={filters.condition || ''}
-                  onChange={(e) => handleFilterChange('condition', e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                >
-                  <option value="">Tous</option>
-                  {CONDITIONS.map(condition => (
-                    <option key={condition.value} value={condition.value}>
-                      {condition.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+        {/* Modèle */}
+        {localFilters.brand && models.length > 0 && (
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Modèle
+            </label>
+            <select
+              value={localFilters.model || ''}
+              onChange={(e) => handleChange('model', e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+            >
+              <option value="">Tous les modèles</option>
+              {models.map(model => (
+                <option key={model} value={model}>{model}</option>
+              ))}
+            </select>
           </div>
         )}
+
+        {/* Année */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Année: {localFilters.yearMin || 2000} - {localFilters.yearMax || 2024}
+          </label>
+          <div className="space-y-3">
+            <div>
+              <input
+                type="range"
+                min="2000"
+                max="2024"
+                value={localFilters.yearMin || 2000}
+                onChange={(e) => handleChange('yearMin', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Min: {localFilters.yearMin || 2000}</div>
+            </div>
+            <div>
+              <input
+                type="range"
+                min="2000"
+                max="2024"
+                value={localFilters.yearMax || 2024}
+                onChange={(e) => handleChange('yearMax', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Max: {localFilters.yearMax || 2024}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Kilométrage */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Kilométrage max: {(localFilters.mileageMax || 100000).toLocaleString()} km
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="100000"
+            step="5000"
+            value={localFilters.mileageMax || 100000}
+            onChange={(e) => handleChange('mileageMax', parseInt(e.target.value))}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+          />
+        </div>
+
+        {/* Cylindrée */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Cylindrée: {localFilters.engineSizeMin || 125}cc - {localFilters.engineSizeMax || 1650}cc
+          </label>
+          <div className="space-y-3">
+            <div>
+              <input
+                type="range"
+                min="125"
+                max="1650"
+                step="50"
+                value={localFilters.engineSizeMin || 125}
+                onChange={(e) => handleChange('engineSizeMin', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Min: {localFilters.engineSizeMin || 125}cc</div>
+            </div>
+            <div>
+              <input
+                type="range"
+                min="125"
+                max="1650"
+                step="50"
+                value={localFilters.engineSizeMax || 1650}
+                onChange={(e) => handleChange('engineSizeMax', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Max: {localFilters.engineSizeMax || 1650}cc</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Prix */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Prix: {(localFilters.priceMin || 0).toLocaleString()}DT - {(localFilters.priceMax || 25000).toLocaleString()}DT
+          </label>
+          <div className="space-y-3">
+            <div>
+              <input
+                type="range"
+                min="0"
+                max="25000"
+                step="500"
+                value={localFilters.priceMin || 0}
+                onChange={(e) => handleChange('priceMin', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Min: {(localFilters.priceMin || 0).toLocaleString()}DT</div>
+            </div>
+            <div>
+              <input
+                type="range"
+                min="0"
+                max="25000"
+                step="500"
+                value={localFilters.priceMax || 25000}
+                onChange={(e) => handleChange('priceMax', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+              />
+              <div className="text-xs text-gray-500 mt-1">Max: {(localFilters.priceMax || 25000).toLocaleString()}DT</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Couleurs */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Couleurs
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {COLORS.map(color => (
+              <button
+                key={color}
+                onClick={() => handleColorToggle(color)}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  (localFilters.colors || []).includes(color)
+                    ? 'bg-orange-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {color}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Types */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Types de moto
+          </label>
+          <div className="space-y-2">
+            {TYPES.map(type => (
+              <button
+                key={type}
+                onClick={() => handleTypeToggle(type)}
+                className={`w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
+                  (localFilters.types || []).includes(type)
+                    ? 'bg-orange-600 text-white shadow-md'
+                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
-    </aside>
+
+      {/* Actions */}
+      <div className="mt-6 space-y-3">
+        <button
+          onClick={applyFilters}
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-md"
+        >
+          Rechercher
+        </button>
+        <button
+          onClick={resetFilters}
+          className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg transition-colors"
+        >
+          Réinitialiser
+        </button>
+      </div>
+    </div>
   );
 };
 

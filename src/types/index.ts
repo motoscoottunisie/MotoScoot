@@ -15,6 +15,9 @@ export interface Listing {
   sellerName: string;
   createdAt: Date;
   isFavorite?: boolean;
+  engineSize?: number;
+  color?: string;
+  type?: 'Sportive' | 'Trail' | 'Custom' | 'Roadster' | 'Routière' | 'Scooter';
 }
 
 export interface User {
@@ -43,8 +46,14 @@ export interface SearchFilters {
   priceMax?: number;
   yearMin?: number;
   yearMax?: number;
+  mileageMin?: number;
   mileageMax?: number;
+  engineSizeMin?: number;
+  engineSizeMax?: number;
   location?: string;
   brand?: string;
+  model?: string;
   condition?: string;
+  colors?: string[];
+  types?: string[];
 }
