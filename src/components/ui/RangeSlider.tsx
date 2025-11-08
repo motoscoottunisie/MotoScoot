@@ -82,48 +82,76 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       <style>{`
         .range-slider {
           height: 8px;
-          margin: 20px 0 30px 0;
+          margin: 50px 10px 20px 10px;
         }
         .noUi-target {
-          background: #f3f4f6;
+          background: #e5e7eb;
           border-radius: 9999px;
           border: none;
           box-shadow: none;
+          height: 8px;
+        }
+        .noUi-connects {
+          border-radius: 9999px;
+          overflow: visible;
         }
         .noUi-connect {
           background: #ea580c;
+          border-radius: 9999px;
+        }
+        .noUi-horizontal {
+          height: 8px;
         }
         .noUi-handle {
-          width: 20px;
-          height: 20px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          border: 4px solid #ea580c;
+          border: 5px solid #ea580c;
           background: white;
-          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
           cursor: pointer;
           top: 50%;
-          transform: translate(-50%, -50%);
+          right: -20px;
         }
         .noUi-handle:before,
         .noUi-handle:after {
           display: none;
         }
+        .noUi-handle:focus {
+          outline: none;
+        }
+        .noUi-horizontal .noUi-handle {
+          width: 40px;
+          height: 40px;
+          top: -16px;
+        }
         .noUi-tooltip {
           background: white;
           border: 1px solid #e5e7eb;
           color: #1f2937;
-          font-size: 12px;
-          padding: 4px 8px;
-          border-radius: 6px;
-          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        }
-        .noUi-horizontal .noUi-handle {
-          right: -10px;
+          font-size: 13px;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          bottom: 150%;
+          white-space: nowrap;
         }
         .noUi-horizontal .noUi-tooltip {
-          bottom: 120%;
+          transform: translate(-50%, 0);
+          left: 50%;
+        }
+        .noUi-tooltip::after {
+          content: '';
+          position: absolute;
+          top: 100%;
           left: 50%;
           transform: translateX(-50%);
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid white;
         }
       `}</style>
     </div>
