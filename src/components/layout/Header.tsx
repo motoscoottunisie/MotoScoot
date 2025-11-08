@@ -97,12 +97,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                   Actualités
                 </Link>
                 <Link
-                  to="/conseil"
-                  className="text-gray-700 hover:text-orange-600 font-medium transition-colors duration-300 px-3"
-                >
-                  Conseil
-                </Link>
-                <Link
                   to="/garages"
                   className="text-gray-700 hover:text-orange-600 font-medium transition-colors duration-300 px-3"
                 >
@@ -202,13 +196,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Actualités
-                  </Link>
-                  <Link
-                    to="/conseil"
-                    className="text-gray-700 hover:text-orange-600 font-medium py-2 px-4 rounded-xl hover:bg-gray-100 transition-all duration-300"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Conseil
                   </Link>
                   <Link
                     to="/garages"
