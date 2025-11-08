@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, MapPin, Calendar, Gauge, MessageCircle, User } from 'lucide-react';
+import { Heart, MapPin, Calendar, Gauge, MessageCircle } from 'lucide-react';
 import { Listing } from '../../types';
 import { formatPrice, formatNumber } from '../../utils/format';
 import { useImageLoader } from '../../hooks/useImageLoader';
@@ -68,13 +68,9 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
 
         <div className="flex-1 p-4 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+            <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
               {listing.brand} {listing.model}
             </h3>
-
-            <div className="text-2xl font-bold text-red-600 mb-3">
-              {formatPrice(listing.price)}
-            </div>
 
             <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-2">
               {listing.category !== 'accessoires' && (
@@ -127,20 +123,15 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
 
           <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
             <div className="flex-grow min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate">{listing.sellerName}</p>
-              <div className="flex items-center gap-2 mt-1">
-                {listing.sellerType === 'professional' ? (
-                  <>
-                    <p className="text-xs text-gray-500">Vendeur professionnel</p>
-                    <Badge size="sm" variant="default">
-                      <User size={10} className="mr-1" />
-                      Pro
-                    </Badge>
-                  </>
-                ) : (
-                  <p className="text-xs text-gray-500">Vendeur particulier</p>
-                )}
+              <div className="flex items-center gap-3 mb-1">
+                <p className="text-sm font-semibold text-gray-900 truncate">{listing.sellerName}</p>
+                <div className="text-lg font-bold text-orange-600">
+                  {formatPrice(listing.price)}
+                </div>
               </div>
+              <p className="text-xs text-gray-500">
+                {listing.sellerType === 'professional' ? 'Vendeur professionnel' : 'Vendeur particulier'}
+              </p>
             </div>
 
             <div className="flex gap-2 ml-3">
