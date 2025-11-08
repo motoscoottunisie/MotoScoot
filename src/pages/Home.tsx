@@ -49,8 +49,8 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 text-center z-10">
-          <h1 className="text-5xl sm:text-4xl lg:text-6xl mb-4 sm:mb-6 drop-shadow-lg leading-snug sm:leading-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            <span className="font-extrabold" style={{ fontWeight: 800 }}>Trouvez</span> <span className="font-medium" style={{ fontWeight: 500 }}>la moto d'occasion</span>
+          <h1 className="mb-4 sm:mb-6 drop-shadow-lg leading-snug sm:leading-tight" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '44px' }}>
+            <span className="font-extrabold" style={{ fontWeight: 800 }}>Trouvez la moto d'occasion</span>
             <br />
             <span className="text-orange-200 font-medium" style={{ fontWeight: 500 }}>qui vous correspond</span>
           </h1>
