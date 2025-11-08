@@ -1,26 +1,18 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Star, Clock, ExternalLink, Wrench } from 'lucide-react';
+import { MapPin, Phone, Star, Clock, Wrench } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Garage } from '../../types/garage';
+import Badge from '../ui/Badge';
 
-const Badge = ({ children, variant = 'secondary', size = 'sm' }) => {
-  const variantStyles = {
-    secondary: 'bg-gray-100 text-gray-700',
-    outline: 'border border-gray-300 text-gray-700 bg-white'
-  };
-  
-  const sizeStyles = {
-    sm: 'px-2 py-0.5 text-xs'
-  };
-  
-  return (
-    <span className={`rounded-full font-medium ${variantStyles[variant]} ${sizeStyles[size]}`}>
-      {children}
-    </span>
-  );
-};
+interface GarageCardProps {
+  garage: Garage;
+}
 
-const GarageCard = ({ garage }) => {
+const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
+  const navigate = useNavigate();
+
   const handleCardClick = () => {
-    alert(`Navigating to garage: ${garage.name}`);
+    navigate(`/garage/${garage.id}`);
   };
 
   return (
@@ -67,8 +59,6 @@ const GarageCard = ({ garage }) => {
             </a>
           </div>
 
-
-
           <div className="flex items-center space-x-2 text-sm text-gray-700">
             <Clock size={16} className="text-orange-600 flex-shrink-0" />
             <span>{garage.opening_hours}</span>
@@ -95,59 +85,9 @@ const GarageCard = ({ garage }) => {
             </div>
           </div>
         )}
-
-
-
       </div>
     </div>
   );
 };
 
-// Sample data for preview
-const sampleGarages = [
-  {
-    id: '1',
-    name: 'Auto Excellence Tunisie',
-    description: 'Garage professionnel spécialisé dans la réparation et l\'entretien de tous types de véhicules. Service rapide et de qualité avec des techniciens certifiés.',
-    address: '15 Avenue Habib Bourguiba',
-    gouvernorat: 'Nabeul',
-    phone: '+216 72 123 456',
-    email: 'contact@autoexcellence.tn',
-    opening_hours: 'Lun-Sam: 8h-18h',
-    rating: 4.7,
-    image_url: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&h=400&fit=crop',
-    specialties: ['Mécanique générale', 'Climatisation', 'Diagnostic électronique', 'Freinage', 'Vidange'],
-    brands: ['Peugeot', 'Renault', 'Citroën', 'Volkswagen', 'Mercedes'],
-    website: 'www.autoexcellence.tn'
-  },
-  {
-    id: '2',
-    name: 'Garage Moderne',
-    description: 'Service complet de réparation automobile avec équipement de pointe.',
-    address: '28 Rue de la République',
-    gouvernorat: 'Tunis',
-    phone: '+216 71 987 654',
-    email: null,
-    opening_hours: 'Lun-Ven: 9h-17h',
-    rating: 4.3,
-    image_url: null,
-    specialties: ['Carrosserie', 'Peinture'],
-    brands: ['Toyota', 'Honda'],
-    website: null
-  }
-];
-
-export default function App() {
-  return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Garage Card Component Preview</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {sampleGarages.map((garage) => (
-            <GarageCard key={garage.id} garage={garage} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+export default GarageCard;
