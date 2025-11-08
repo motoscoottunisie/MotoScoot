@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SearchFilters } from '../../types';
+import RangeSlider from '../ui/RangeSlider';
 
 interface SearchFiltersProps {
   filters: SearchFilters;
@@ -116,35 +117,16 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         )}
 
         {/* Année */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Année: {localFilters.yearMin || 2000} - {localFilters.yearMax || 2024}
-          </label>
-          <div className="space-y-3">
-            <div>
-              <input
-                type="range"
-                min="2000"
-                max="2024"
-                value={localFilters.yearMin || 2000}
-                onChange={(e) => handleChange('yearMin', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Min: {localFilters.yearMin || 2000}</div>
-            </div>
-            <div>
-              <input
-                type="range"
-                min="2000"
-                max="2024"
-                value={localFilters.yearMax || 2024}
-                onChange={(e) => handleChange('yearMax', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Max: {localFilters.yearMax || 2024}</div>
-            </div>
-          </div>
-        </div>
+        <RangeSlider
+          min={2000}
+          max={2024}
+          start={[localFilters.yearMin || 2000, localFilters.yearMax || 2024]}
+          onChange={(values) => {
+            handleChange('yearMin', values[0]);
+            handleChange('yearMax', values[1]);
+          }}
+          label="Année"
+        />
 
         {/* Kilométrage */}
         <div>
@@ -163,70 +145,32 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         </div>
 
         {/* Cylindrée */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Cylindrée: {localFilters.engineSizeMin || 125}cc - {localFilters.engineSizeMax || 1650}cc
-          </label>
-          <div className="space-y-3">
-            <div>
-              <input
-                type="range"
-                min="125"
-                max="1650"
-                step="50"
-                value={localFilters.engineSizeMin || 125}
-                onChange={(e) => handleChange('engineSizeMin', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Min: {localFilters.engineSizeMin || 125}cc</div>
-            </div>
-            <div>
-              <input
-                type="range"
-                min="125"
-                max="1650"
-                step="50"
-                value={localFilters.engineSizeMax || 1650}
-                onChange={(e) => handleChange('engineSizeMax', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Max: {localFilters.engineSizeMax || 1650}cc</div>
-            </div>
-          </div>
-        </div>
+        <RangeSlider
+          min={125}
+          max={1650}
+          step={50}
+          start={[localFilters.engineSizeMin || 125, localFilters.engineSizeMax || 1650]}
+          onChange={(values) => {
+            handleChange('engineSizeMin', values[0]);
+            handleChange('engineSizeMax', values[1]);
+          }}
+          formatter={(value) => `${Math.round(value)}cc`}
+          label="Cylindrée"
+        />
 
         {/* Prix */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Prix: {(localFilters.priceMin || 0).toLocaleString()}DT - {(localFilters.priceMax || 25000).toLocaleString()}DT
-          </label>
-          <div className="space-y-3">
-            <div>
-              <input
-                type="range"
-                min="0"
-                max="25000"
-                step="500"
-                value={localFilters.priceMin || 0}
-                onChange={(e) => handleChange('priceMin', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Min: {(localFilters.priceMin || 0).toLocaleString()}DT</div>
-            </div>
-            <div>
-              <input
-                type="range"
-                min="0"
-                max="25000"
-                step="500"
-                value={localFilters.priceMax || 25000}
-                onChange={(e) => handleChange('priceMax', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-              />
-              <div className="text-xs text-gray-500 mt-1">Max: {(localFilters.priceMax || 25000).toLocaleString()}DT</div>
-            </div>
-          </div>
-        </div>
+        <RangeSlider
+          min={0}
+          max={25000}
+          step={500}
+          start={[localFilters.priceMin || 0, localFilters.priceMax || 25000]}
+          onChange={(values) => {
+            handleChange('priceMin', values[0]);
+            handleChange('priceMax', values[1]);
+          }}
+          formatter={(value) => `${Math.round(value).toLocaleString()}DT`}
+          label="Prix"
+        />
 
         {/* Couleurs */}
         <div>
