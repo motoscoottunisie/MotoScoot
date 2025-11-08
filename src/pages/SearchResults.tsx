@@ -99,7 +99,7 @@ const SearchResults: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative text-white min-h-[20vh] flex items-center overflow-hidden">
+      <section className="relative text-white min-h-[40vh] flex items-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
           style={{
