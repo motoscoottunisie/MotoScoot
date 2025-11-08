@@ -8,8 +8,7 @@ interface SearchFiltersProps {
 }
 
 const BRANDS = ['Honda', 'Yamaha', 'Kawasaki', 'Suzuki', 'BMW', 'Ducati', 'Triumph', 'KTM', 'Harley-Davidson'];
-const COLORS = ['Noir', 'Blanc', 'Rouge', 'Bleu', 'Vert', 'Jaune', 'Orange', 'Gris'];
-const TYPES = ['Sportive', 'Trail', 'Custom', 'Roadster', 'Routière'];
+const TYPES = ['Moto', 'Scooter', 'Accessoires'];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
@@ -47,14 +46,6 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       [key]: value === '' ? undefined : value
     };
     setLocalFilters(newFilters);
-  };
-
-  const handleColorToggle = (color: string) => {
-    const currentColors = localFilters.colors || [];
-    const newColors = currentColors.includes(color)
-      ? currentColors.filter(c => c !== color)
-      : [...currentColors, color];
-    handleChange('colors', newColors.length > 0 ? newColors : undefined);
   };
 
   const handleTypeToggle = (type: string) => {
@@ -172,23 +163,23 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           label="Prix"
         />
 
-        {/* Couleurs */}
+        {/* Type */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Couleurs
+            Type
           </label>
           <div className="flex flex-wrap gap-2">
-            {COLORS.map(color => (
+            {TYPES.map(type => (
               <button
-                key={color}
-                onClick={() => handleColorToggle(color)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  (localFilters.colors || []).includes(color)
+                key={type}
+                onClick={() => handleTypeToggle(type)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  (localFilters.types || []).includes(type)
                     ? 'bg-orange-600 text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {color}
+                {type}
               </button>
             ))}
           </div>
