@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { SlidersHorizontal, X } from 'lucide-react';
 import SearchListingCard from '../components/features/SearchListingCard';
 import SearchFiltersComponent from '../components/features/SearchFilters';
 import { mockListings } from '../data/mockData';
@@ -9,17 +9,13 @@ import { useFavorites } from '../hooks/useFavorites';
 
 const SearchResults: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+  const searchQuery = searchParams.get('q') || '';
   const { favorites, toggleFavorite } = useFavorites();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
   const [filters, setFilters] = useState<SearchFilters>({});
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
 
   const activeFilterCount = useMemo(() => {
     let count = 0;
@@ -103,7 +99,7 @@ const SearchResults: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative text-white min-h-[40vh] flex items-center overflow-hidden">
+      <section className="relative text-white min-h-[20vh] flex items-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
           style={{
@@ -123,28 +119,9 @@ const SearchResults: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
-          <h1 className="text-3xl lg:text-5xl font-bold mb-6 drop-shadow-lg">
+          <h1 className="text-3xl lg:text-5xl font-bold drop-shadow-lg">
             Rechercher votre moto
           </h1>
-
-          <div className="max-w-3xl mx-auto">
-            <form onSubmit={handleSearch} className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Recherche..."
-                className="w-full pl-6 pr-14 py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
-              />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
-                aria-label="Rechercher"
-              >
-                <Search size={24} />
-              </button>
-            </form>
-          </div>
         </div>
       </section>
 
