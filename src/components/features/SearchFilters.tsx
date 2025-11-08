@@ -101,8 +101,8 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         </div>
 
         <RangeSlider
-          min={0}
-          max={2100}
+          min={1970}
+          max={2026}
           step={1}
           start={[localFilters.yearMin || 1970, localFilters.yearMax || 2026]}
           onChange={(values) => {
@@ -126,10 +126,10 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         />
 
         <RangeSlider
-          min={125}
+          min={50}
           max={1650}
           step={25}
-          start={[localFilters.engineSizeMin || 125, localFilters.engineSizeMax || 1650]}
+          start={[localFilters.engineSizeMin || 50, localFilters.engineSizeMax || 1650]}
           onChange={(values) => {
             handleChange('engineSizeMin', values[0]);
             handleChange('engineSizeMax', values[1]);
