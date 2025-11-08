@@ -116,7 +116,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
                 onClick={() => handleTypeToggle(type)}
                 className={`px-4 py-2.5 text-sm font-medium rounded-full transition-all ${
                   (localFilters.types || []).includes(type)
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-orange-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -129,7 +129,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
 
       <div className="pt-4 space-y-3">
         <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-full transition-colors"
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 rounded-full transition-colors"
         >
           Afficher les résultats
         </button>
