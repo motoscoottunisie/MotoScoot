@@ -129,13 +129,17 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
             <div className="flex-grow min-w-0">
               <p className="text-sm font-semibold text-gray-900 truncate">{listing.sellerName}</p>
               <div className="flex items-center gap-2 mt-1">
-                <p className="text-xs text-gray-500">
-                  {listing.sellerType === 'professional' ? 'Vendeur professionnel' : 'Vendeur particulier'}
-                </p>
-                <Badge size="sm" variant={listing.sellerType === 'professional' ? 'default' : 'secondary'}>
-                  <User size={10} className="mr-1" />
-                  {listing.sellerType === 'professional' ? 'Pro' : 'Particulier'}
-                </Badge>
+                {listing.sellerType === 'professional' ? (
+                  <>
+                    <p className="text-xs text-gray-500">Vendeur professionnel</p>
+                    <Badge size="sm" variant="default">
+                      <User size={10} className="mr-1" />
+                      Pro
+                    </Badge>
+                  </>
+                ) : (
+                  <p className="text-xs text-gray-500">Vendeur particulier</p>
+                )}
               </div>
             </div>
 
