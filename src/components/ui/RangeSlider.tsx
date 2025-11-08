@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import noUiSlider, { API } from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 
@@ -23,6 +23,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderInstance = useRef<API | null>(null);
+  const [currentValues, setCurrentValues] = useState<[number, number]>(start);
 
   useEffect(() => {
     if (!sliderRef.current) return;
@@ -39,16 +40,12 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         max: max,
       },
       step: step,
-      tooltips: [
-        {
-          to: formatter,
-          from: (value) => Number(value),
-        },
-        {
-          to: formatter,
-          from: (value) => Number(value),
-        },
-      ],
+      tooltips: false,
+    });
+
+    sliderInstance.current.on('update', (values) => {
+      const numericValues = values.map(v => Number(v)) as [number, number];
+      setCurrentValues(numericValues);
     });
 
     sliderInstance.current.on('change', (values) => {
@@ -72,46 +69,65 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-3">
-        {label}: {formatter(start[0])} - {formatter(start[1])}
+      <label className="block text-sm font-semibold text-gray-900 mb-4">
+        {label}
       </label>
       <div
         ref={sliderRef}
-        className="range-slider"
+        className="range-slider mb-4"
       />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs text-gray-600 mb-1.5">Min</label>
+          <input
+            type="text"
+            readOnly
+            value={formatter(currentValues[0])}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm"
+          />
+        </div>
+        <div>
+          <label className="block text-xs text-gray-600 mb-1.5">Max</label>
+          <input
+            type="text"
+            readOnly
+            value={formatter(currentValues[1])}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm"
+          />
+        </div>
+      </div>
       <style>{`
         .range-slider {
-          height: 8px;
-          margin: 50px 10px 20px 10px;
+          height: 6px;
+          margin: 0;
         }
         .noUi-target {
           background: #e5e7eb;
           border-radius: 9999px;
           border: none;
           box-shadow: none;
-          height: 8px;
+          height: 6px;
         }
         .noUi-connects {
           border-radius: 9999px;
-          overflow: visible;
         }
         .noUi-connect {
           background: #ea580c;
           border-radius: 9999px;
         }
         .noUi-horizontal {
-          height: 8px;
+          height: 6px;
         }
         .noUi-handle {
-          width: 40px;
-          height: 40px;
+          width: 24px;
+          height: 24px;
           border-radius: 50%;
-          border: 5px solid #ea580c;
+          border: none;
           background: white;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
           cursor: pointer;
-          top: 50%;
-          right: -20px;
+          top: -9px;
+          right: -12px;
         }
         .noUi-handle:before,
         .noUi-handle:after {
@@ -119,39 +135,11 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         }
         .noUi-handle:focus {
           outline: none;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         .noUi-horizontal .noUi-handle {
-          width: 40px;
-          height: 40px;
-          top: -16px;
-        }
-        .noUi-tooltip {
-          background: white;
-          border: 1px solid #e5e7eb;
-          color: #1f2937;
-          font-size: 13px;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          bottom: 150%;
-          white-space: nowrap;
-        }
-        .noUi-horizontal .noUi-tooltip {
-          transform: translate(-50%, 0);
-          left: 50%;
-        }
-        .noUi-tooltip::after {
-          content: '';
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 0;
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
-          border-top: 6px solid white;
+          width: 24px;
+          height: 24px;
         }
       `}</style>
     </div>
