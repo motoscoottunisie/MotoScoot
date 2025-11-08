@@ -3,6 +3,8 @@ import { MapPin, Phone, Star, Clock, Wrench } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Garage } from '../../types/garage';
 import Badge from '../ui/Badge';
+import { useImageLoader } from '../../hooks/useImageLoader';
+import { ImagePlaceholder, ImageSkeleton } from '../ui/ImagePlaceholder';
 
 interface GarageCardProps {
   garage: Garage;
@@ -10,6 +12,7 @@ interface GarageCardProps {
 
 const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
   const navigate = useNavigate();
+  const { isLoaded, hasError, handleLoad, handleError } = useImageLoader();
 
   const handleCardClick = () => {
     navigate(`/garage/${garage.id}`);
@@ -20,16 +23,24 @@ const GarageCard: React.FC<GarageCardProps> = ({ garage }) => {
       onClick={handleCardClick}
       className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
     >
-      {garage.image_url && (
-        <div className="h-48 overflow-hidden bg-gray-200">
+      <div className="h-48 overflow-hidden bg-gray-200 relative">
+        {!isLoaded && !hasError && <ImageSkeleton />}
+        {hasError && <ImagePlaceholder />}
+        {garage.image_url && (
           <img
             src={garage.image_url}
             alt={garage.name}
             loading="lazy"
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            onLoad={handleLoad}
+            onError={handleError}
+            className={`w-full h-full object-cover hover:scale-105 transition-transform duration-300 ${
+              isLoaded && !hasError ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{ position: hasError ? 'absolute' : 'relative' }}
           />
-        </div>
-      )}
+        )}
+        {!garage.image_url && <ImagePlaceholder />}
+      </div>
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
