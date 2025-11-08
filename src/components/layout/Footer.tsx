@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer role="contentinfo" className="bg-[#0F0F0F] text-gray-400">
+    <footer id="footer" role="contentinfo" className="bg-[#0F0F0F] text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           <div className="space-y-6" aria-label="Company information">

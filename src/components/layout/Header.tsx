@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
     <header role="banner" className={`fixed top-0 left-0 right-0 z-50 px-4 pt-8 transition-transform duration-300 ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
-    <nav aria-label="Main navigation" className="max-w-5xl mx-auto">
+    <nav id="navigation" aria-label="Main navigation" className="max-w-5xl mx-auto">
         <div className="bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg">
           <div className="px-6 py-3">
             <div className="flex items-center justify-between">
