@@ -104,7 +104,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           min={0}
           max={2100}
           step={1}
-          start={[localFilters.yearMin || 0, localFilters.yearMax || 2100]}
+          start={[localFilters.yearMin || 1970, localFilters.yearMax || 2026]}
           onChange={(values) => {
             handleChange('yearMin', values[0]);
             handleChange('yearMax', values[1]);
