@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import noUiSlider, { API } from 'nouislider';
-import 'nouislider/dist/nouislider.css';
+import React, { useState } from 'react';
 
 interface RangeSliderProps {
   min: number;
@@ -21,130 +19,65 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   formatter = (value) => Math.round(value).toString(),
   label,
 }) => {
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderInstance = useRef<API | null>(null);
-  const [currentValues, setCurrentValues] = useState<[number, number]>(start);
+  const [minValue, setMinValue] = useState(start[0]);
+  const [maxValue, setMaxValue] = useState(start[1]);
 
-  useEffect(() => {
-    if (!sliderRef.current) return;
-
-    if (sliderInstance.current) {
-      sliderInstance.current.destroy();
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value <= maxValue) {
+      setMinValue(value);
+      onChange([value, maxValue]);
     }
+  };
 
-    sliderInstance.current = noUiSlider.create(sliderRef.current, {
-      start: start,
-      connect: true,
-      range: {
-        min: min,
-        max: max,
-      },
-      step: step,
-      tooltips: false,
-    });
-
-    sliderInstance.current.on('update', (values) => {
-      const numericValues = values.map(v => Number(v)) as [number, number];
-      setCurrentValues(numericValues);
-    });
-
-    sliderInstance.current.on('change', (values) => {
-      const numericValues = values.map(v => Number(v)) as [number, number];
-      onChange(numericValues);
-    });
-
-    return () => {
-      if (sliderInstance.current) {
-        sliderInstance.current.destroy();
-        sliderInstance.current = null;
-      }
-    };
-  }, [min, max, step]);
-
-  useEffect(() => {
-    if (sliderInstance.current) {
-      sliderInstance.current.set(start);
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= minValue) {
+      setMaxValue(value);
+      onChange([minValue, value]);
     }
-  }, [start]);
+  };
+
+  const minPercentage = ((minValue - min) / (max - min)) * 100;
+  const maxPercentage = ((maxValue - min) / (max - min)) * 100;
 
   return (
-    <div className="mb-2">
-      <label className="block text-sm font-semibold text-gray-900 mb-4">
-        {label}
-      </label>
-      <div
-        ref={sliderRef}
-        className="range-slider mb-6"
-      />
-      <div className="grid grid-cols-2 gap-3">
-        <input
-          type="text"
-          readOnly
-          value={formatter(currentValues[0])}
-          className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm text-center font-medium cursor-default focus:outline-none"
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="text-sm text-gray-600">{label}</span>
+        <span className="text-sm text-gray-900">
+          {formatter(minValue)} - {formatter(maxValue)}
+        </span>
+      </div>
+
+      <div className="relative h-1">
+        <div className="absolute w-full h-full bg-gray-200 rounded" />
+        <div
+          className="absolute h-full bg-gray-800 rounded"
+          style={{
+            left: `${minPercentage}%`,
+            right: `${100 - maxPercentage}%`,
+          }}
         />
         <input
-          type="text"
-          readOnly
-          value={formatter(currentValues[1])}
-          className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm text-center font-medium cursor-default focus:outline-none"
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={minValue}
+          onChange={handleMinChange}
+          className="absolute w-full h-1 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-gray-300 [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-gray-300 [&::-moz-range-thumb]:cursor-pointer"
+        />
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={maxValue}
+          onChange={handleMaxChange}
+          className="absolute w-full h-1 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-gray-300 [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-gray-300 [&::-moz-range-thumb]:cursor-pointer"
         />
       </div>
-      <style>{`
-        .range-slider {
-          height: 6px;
-          margin: 0;
-          padding: 0 2px;
-        }
-        .noUi-target {
-          background: #e5e7eb;
-          border-radius: 9999px;
-          border: none;
-          box-shadow: none;
-          height: 6px;
-        }
-        .noUi-connects {
-          border-radius: 9999px;
-        }
-        .noUi-connect {
-          background: #ea580c;
-          border-radius: 9999px;
-        }
-        .noUi-horizontal {
-          height: 6px;
-        }
-        .noUi-handle {
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          border: none;
-          background: white;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-          cursor: grab;
-          top: -10px;
-          right: -13px;
-          transition: box-shadow 0.2s, transform 0.1s;
-        }
-        .noUi-handle:hover {
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-        }
-        .noUi-handle:active {
-          cursor: grabbing;
-          box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
-          transform: scale(1.1);
-        }
-        .noUi-handle:before,
-        .noUi-handle:after {
-          display: none;
-        }
-        .noUi-handle:focus {
-          outline: none;
-        }
-        .noUi-horizontal .noUi-handle {
-          width: 26px;
-          height: 26px;
-        }
-      `}</style>
     </div>
   );
 };

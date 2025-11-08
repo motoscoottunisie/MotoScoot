@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { SearchFilters } from '../../types';
 import RangeSlider from '../ui/RangeSlider';
 
@@ -7,38 +7,14 @@ interface SearchFiltersProps {
   onFiltersChange: (filters: SearchFilters) => void;
 }
 
-const BRANDS = ['Honda', 'Yamaha', 'Kawasaki', 'Suzuki', 'BMW', 'Ducati', 'Triumph', 'KTM', 'Harley-Davidson'];
-const TYPES = ['Moto', 'Scooter', 'Accessoires'];
+const TYPES = ['Gaming', 'Electronics', 'Phone', 'TV/Monitor', 'Laptop', 'Watch'];
+const STATES = ['All', 'New', 'Refurbished'];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
   onFiltersChange,
 }) => {
   const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
-  const [models, setModels] = useState<string[]>([]);
-
-  const MODELS_BY_BRAND: Record<string, string[]> = {
-    'Honda': ['CL500', 'CB650R', 'Africa Twin', 'CBR600RR'],
-    'Yamaha': ['MT-07', 'YZF-R1', 'Tracer 9', 'XSR700'],
-    'Kawasaki': ['Ninja 650', 'Z900', 'Versys 650', 'ZX-10R'],
-    'Suzuki': ['GSX-R750', 'V-Strom 650', 'GSX-S750', 'Hayabusa'],
-    'BMW': ['R1250 GS', 'K1600 GT', 'S1000RR', 'F900R'],
-    'Ducati': ['Scrambler Icon', 'Monster', 'Panigale V4', 'Multistrada'],
-    'Triumph': ['Bonneville T120', 'Street Triple', 'Tiger 900', 'Speed Twin'],
-    'KTM': ['790 Adventure', '390 Duke', '890 Duke R', '1290 Super Duke'],
-    'Harley-Davidson': ['Street 750', 'Sportster', 'Road King', 'Fat Boy']
-  };
-
-  useEffect(() => {
-    if (localFilters.brand && MODELS_BY_BRAND[localFilters.brand]) {
-      setModels(MODELS_BY_BRAND[localFilters.brand]);
-    } else {
-      setModels([]);
-      if (localFilters.model) {
-        setLocalFilters(prev => ({ ...prev, model: undefined }));
-      }
-    }
-  }, [localFilters.brand]);
 
   const handleChange = (key: keyof SearchFilters, value: any) => {
     const newFilters = {
@@ -46,6 +22,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       [key]: value === '' ? undefined : value
     };
     setLocalFilters(newFilters);
+    onFiltersChange(newFilters);
   };
 
   const handleTypeToggle = (type: string) => {
@@ -53,11 +30,12 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     const newTypes = currentTypes.includes(type)
       ? currentTypes.filter(t => t !== type)
       : [...currentTypes, type];
-    handleChange('types', newTypes.length > 0 ? newTypes : undefined);
-  };
-
-  const applyFilters = () => {
-    onFiltersChange(localFilters);
+    const newFilters = {
+      ...localFilters,
+      types: newTypes.length > 0 ? newTypes : undefined
+    };
+    setLocalFilters(newFilters);
+    onFiltersChange(newFilters);
   };
 
   const resetFilters = () => {
@@ -67,116 +45,53 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 sticky top-4">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Filtres de recherche</h2>
+    <div className="bg-white border border-gray-200 p-4 sticky top-4">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm text-gray-500">Filter</h2>
+        <button
+          onClick={resetFilters}
+          className="text-xs text-gray-500 hover:text-gray-700"
+        >
+          Reset
+        </button>
+      </div>
 
-      <div className="space-y-6">
-        {/* Marque */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Marque
-          </label>
-          <select
-            value={localFilters.brand || ''}
-            onChange={(e) => handleChange('brand', e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
-          >
-            <option value="">Toutes les marques</option>
-            {BRANDS.map(brand => (
-              <option key={brand} value={brand}>{brand}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Modèle */}
-        {localFilters.brand && models.length > 0 && (
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Modèle
-            </label>
-            <select
-              value={localFilters.model || ''}
-              onChange={(e) => handleChange('model', e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
-            >
-              <option value="">Tous les modèles</option>
-              {models.map(model => (
-                <option key={model} value={model}>{model}</option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {/* Année */}
+      <div className="space-y-4">
         <RangeSlider
-          min={2000}
-          max={2024}
-          start={[localFilters.yearMin || 2000, localFilters.yearMax || 2024]}
-          onChange={(values) => {
-            handleChange('yearMin', values[0]);
-            handleChange('yearMax', values[1]);
-          }}
-          label="Année"
-        />
-
-        {/* Kilométrage */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Kilométrage max: {(localFilters.mileageMax || 100000).toLocaleString()} km
-          </label>
-          <input
-            type="range"
-            min="0"
-            max="100000"
-            step="5000"
-            value={localFilters.mileageMax || 100000}
-            onChange={(e) => handleChange('mileageMax', parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
-          />
-        </div>
-
-        {/* Cylindrée */}
-        <RangeSlider
-          min={125}
-          max={1650}
+          min={50}
+          max={3000}
           step={50}
-          start={[localFilters.engineSizeMin || 125, localFilters.engineSizeMax || 1650]}
-          onChange={(values) => {
-            handleChange('engineSizeMin', values[0]);
-            handleChange('engineSizeMax', values[1]);
-          }}
-          formatter={(value) => `${Math.round(value)}cc`}
-          label="Cylindrée"
-        />
-
-        {/* Prix */}
-        <RangeSlider
-          min={0}
-          max={25000}
-          step={500}
-          start={[localFilters.priceMin || 0, localFilters.priceMax || 25000]}
+          start={[localFilters.priceMin || 50, localFilters.priceMax || 3000]}
           onChange={(values) => {
             handleChange('priceMin', values[0]);
             handleChange('priceMax', values[1]);
           }}
-          formatter={(value) => `${Math.round(value).toLocaleString()}DT`}
-          label="Prix"
+          label="Price Range"
         />
 
-        {/* Type */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Type
-          </label>
-          <div className="flex flex-wrap gap-2">
+        <RangeSlider
+          min={1}
+          max={100}
+          step={1}
+          start={[localFilters.yearMin || 1, localFilters.yearMax || 100]}
+          onChange={(values) => {
+            handleChange('yearMin', values[0]);
+            handleChange('yearMax', values[1]);
+          }}
+          label="Sales"
+        />
+
+        <div className="space-y-2">
+          <span className="text-sm text-gray-600">Category</span>
+          <div className="grid grid-cols-2 gap-2">
             {TYPES.map(type => (
               <button
                 key={type}
                 onClick={() => handleTypeToggle(type)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-3 py-2 text-sm border transition-colors ${
                   (localFilters.types || []).includes(type)
-                    ? 'bg-orange-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
                 }`}
               >
                 {type}
@@ -184,21 +99,33 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
             ))}
           </div>
         </div>
+
+        <div className="space-y-2">
+          <span className="text-sm text-gray-600">State</span>
+          <div className="space-y-1">
+            {STATES.map(state => (
+              <label key={state} className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="state"
+                  value={state}
+                  checked={localFilters.condition === state || (!localFilters.condition && state === 'All')}
+                  onChange={(e) => handleChange('condition', e.target.value === 'All' ? undefined : e.target.value)}
+                  className="w-4 h-4 text-gray-600 border-gray-300 focus:ring-0 focus:ring-offset-0"
+                />
+                <span className="text-sm text-gray-700">{state}</span>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Actions */}
-      <div className="mt-6 space-y-3">
-        <button
-          onClick={applyFilters}
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-md"
-        >
-          Rechercher
-        </button>
+      <div className="mt-4 pt-4 border-t border-gray-200">
         <button
           onClick={resetFilters}
-          className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg transition-colors"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 text-sm transition-colors"
         >
-          Réinitialiser
+          Show 32 Results
         </button>
       </div>
     </div>
