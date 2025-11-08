@@ -193,28 +193,6 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
             ))}
           </div>
         </div>
-
-        {/* Types */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Types de moto
-          </label>
-          <div className="space-y-2">
-            {TYPES.map(type => (
-              <button
-                key={type}
-                onClick={() => handleTypeToggle(type)}
-                className={`w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
-                  (localFilters.types || []).includes(type)
-                    ? 'bg-orange-600 text-white shadow-md'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Actions */}

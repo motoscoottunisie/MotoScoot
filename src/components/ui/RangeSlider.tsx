@@ -74,7 +74,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       </label>
       <div
         ref={sliderRef}
-        className="range-slider mb-4"
+        className="range-slider mb-6"
       />
       <div className="grid grid-cols-2 gap-3">
         <input
