@@ -8,12 +8,15 @@ interface SearchFiltersProps {
 }
 
 const TYPES = ['Moto', 'Scooter', 'Accessoires'];
+const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM', 'Harley-Davidson'];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
   onFiltersChange,
 }) => {
   const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
+  const [selectedBrand, setSelectedBrand] = useState<string>('');
+  const [modelInput, setModelInput] = useState<string>('');
 
   const handleChange = (key: keyof SearchFilters, value: any) => {
     const newFilters = {
@@ -37,9 +40,23 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     onFiltersChange(newFilters);
   };
 
+  const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const brand = e.target.value;
+    setSelectedBrand(brand);
+    handleChange('brand', brand || undefined);
+  };
+
+  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const model = e.target.value;
+    setModelInput(model);
+    handleChange('model', model || undefined);
+  };
+
   const resetFilters = () => {
     const emptyFilters: SearchFilters = {};
     setLocalFilters(emptyFilters);
+    setSelectedBrand('');
+    setModelInput('');
     onFiltersChange(emptyFilters);
   };
 
@@ -56,6 +73,31 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       </div>
 
       <div className="space-y-6">
+        <div className="space-y-3">
+          <label className="text-sm text-gray-600 font-medium block">Marque</label>
+          <select
+            value={selectedBrand}
+            onChange={handleBrandChange}
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          >
+            <option value="">Toutes les marques</option>
+            {BRANDS.map(brand => (
+              <option key={brand} value={brand}>{brand}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="space-y-3">
+          <label className="text-sm text-gray-600 font-medium block">Modèle</label>
+          <input
+            type="text"
+            value={modelInput}
+            onChange={handleModelChange}
+            placeholder="Entrez le modèle"
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder:text-gray-400"
+          />
+        </div>
+
         <RangeSlider
           min={0}
           max={2100}
