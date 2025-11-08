@@ -77,7 +77,7 @@ const HomeListingCard: React.FC<HomeListingCardProps> = ({ listing, onToggleFavo
       </Link>
 
       <div className="p-5 flex flex-col flex-grow relative">
-        <div className="absolute -top-12 right-3 z-10 text-2xl font-bold text-red-600 bg-white px-3 py-1.5 rounded-lg shadow-md">
+        <div className="absolute -top-12 right-3 z-10 text-2xl font-bold text-orange-600">
           {formatPrice(listing.price)}
         </div>
 

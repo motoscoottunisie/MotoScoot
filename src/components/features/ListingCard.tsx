@@ -36,7 +36,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
       <Link to={`/listing/${listing.id}`} className="flex w-full relative">
-        <div className="absolute top-4 right-4 z-10 text-2xl font-bold text-red-600 bg-white px-3 py-1.5 rounded-lg shadow-md">
+        <div className="absolute top-4 right-4 z-10 text-2xl font-bold text-orange-600">
           {formatPrice(listing.price)}
         </div>
 
