@@ -119,9 +119,12 @@ const SearchResults: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
-          <h1 className="text-3xl lg:text-5xl font-bold drop-shadow-lg">
-            Rechercher votre moto
+          <h1 className="text-4xl lg:text-6xl font-bold drop-shadow-lg mb-4">
+            Annonces disponibles
           </h1>
+          <p className="text-lg lg:text-xl text-white/90 drop-shadow-md">
+            {filteredListings.length} résultat{filteredListings.length !== 1 ? 's' : ''} trouvé{filteredListings.length !== 1 ? 's' : ''}
+          </p>
         </div>
       </section>
 
@@ -198,16 +201,6 @@ const SearchResults: React.FC = () => {
 
           {/* Main Content - 75% on Desktop, Full Width on Mobile */}
           <main className="lg:col-span-9">
-            {/* Results Header */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Annonces disponibles
-              </h2>
-              <p className="text-gray-600">
-                {filteredListings.length} résultat{filteredListings.length !== 1 ? 's' : ''} trouvé{filteredListings.length !== 1 ? 's' : ''}
-              </p>
-            </div>
-
             {/* Listings Grid */}
             {paginatedListings.length > 0 ? (
               <>
