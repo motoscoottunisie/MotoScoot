@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative text-white min-h-[67vh] lg:min-h-[73vh] flex items-center overflow-hidden">
+      <section className="relative text-white min-h-[70vh] sm:min-h-[60vh] lg:min-h-[73vh] flex items-center overflow-hidden">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
@@ -48,43 +48,43 @@ const Home: React.FC = () => {
         {/* Additional subtle overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 text-center z-10">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg leading-snug sm:leading-tight">
             Trouvez la moto d'occasion
             <br />
             <span className="text-orange-200">qui vous correspond</span>
           </h1>
 
           {/* Search Bar */}
-          <div className="max-w-3xl mx-auto mb-8">
+          <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Recherche..."
-                className="w-full pl-6 pr-14 py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
+                className="w-full pl-4 sm:pl-6 pr-14 py-3 sm:py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-base sm:text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2.5 sm:p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors touch-manipulation"
                 aria-label="Rechercher"
               >
-                <Search size={24} />
+                <Search size={22} className="sm:w-6 sm:h-6" />
               </button>
             </form>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md sm:max-w-none mx-auto">
             <Link
               to="/search"
-              className="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-orange-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center touch-manipulation shadow-md"
             >
               Explorer les annonces
             </Link>
             <Link
               to="/deposit"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors"
+              className="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors text-center touch-manipulation"
             >
               Vendre ma moto
             </Link>
