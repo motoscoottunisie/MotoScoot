@@ -58,19 +58,24 @@ const Home: React.FC = () => {
           {/* Search Bar */}
           <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
             <form onSubmit={handleSearch} className="relative">
+              <label htmlFor="hero-search" className="sr-only">Recherche</label>
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 lg:ps-6 pointer-events-none">
+                <Search size={16} className="text-gray-500 lg:w-6 lg:h-6" />
+              </div>
               <input
-                type="text"
+                type="search"
+                id="hero-search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Recherche..."
-                className="w-full pl-4 sm:pl-6 pr-14 py-3 sm:py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-base sm:text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
+                className="block w-full p-4 ps-10 lg:pl-16 lg:pr-40 lg:py-4 text-sm lg:text-lg border border-gray-300 rounded-lg lg:rounded-xl bg-gray-50 lg:bg-white text-gray-900 placeholder-gray-500 focus:ring-orange-500 focus:border-orange-500 lg:focus:ring-4 lg:focus:ring-orange-300 focus:outline-none shadow-lg"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2.5 sm:p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors touch-manipulation"
-                aria-label="Rechercher"
+                className="absolute end-2.5 bottom-2.5 lg:right-2 lg:top-1/2 lg:transform lg:-translate-y-1/2 px-4 py-2 lg:p-3 text-sm lg:text-base font-medium text-white bg-orange-600 rounded-lg hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 transition-colors touch-manipulation"
               >
-                <Search size={22} className="sm:w-6 sm:h-6" />
+                <span className="lg:hidden">Rechercher</span>
+                <Search size={22} className="hidden lg:block" />
               </button>
             </form>
           </div>
