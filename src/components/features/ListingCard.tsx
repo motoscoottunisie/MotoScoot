@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, MapPin, Calendar, Gauge } from 'lucide-react';
+import { Heart, MapPin, Calendar, Gauge, MessageCircle, User } from 'lucide-react';
 import { Listing } from '../../types';
 import { formatPrice, formatNumber } from '../../utils/format';
 import { useImageLoader } from '../../hooks/useImageLoader';
 import { ImagePlaceholder, ImageSkeleton } from '../ui/ImagePlaceholder';
+import { Badge } from '../ui/Badge';
 
 interface ListingCardProps {
   listing: Listing;
@@ -22,6 +23,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
     }
   };
 
+  const handleContact = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Contact seller:', listing.sellerName);
+  };
+
   return (
     <article
       className="bg-white rounded-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:shadow-lg hover:border-gray-300 group flex"
@@ -29,7 +36,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
       aria-label={`Annonce: ${listing.brand} ${listing.model}`}
     >
       <Link to={`/listing/${listing.id}`} className="flex w-full">
-        {/* Image Container - Left Side */}
         <div className="relative w-[250px] h-[180px] flex-shrink-0 overflow-hidden bg-gray-100">
           {!hasError ? (
             <>
@@ -52,6 +58,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
           ) : (
             <ImagePlaceholder />
           )}
+
+          <div className="absolute top-3 right-3">
+            <Badge className="backdrop-blur-sm shadow-lg" variant="success">
+              {listing.condition.charAt(0).toUpperCase() + listing.condition.slice(1)}
+            </Badge>
+          </div>
         </div>
 
         {/* Content Container - Right Side */}
@@ -118,20 +130,41 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onToggleFavorite }) 
             </div>
           </div>
 
-          {/* Favorite Button - Bottom Right */}
-          <div className="flex justify-end mt-2">
-            <button
-              onClick={handleToggleFavorite}
-              className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
-                listing.isFavorite
-                  ? 'bg-red-500 text-white hover:bg-red-600 hover:scale-110'
-                  : 'bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500 hover:scale-110'
-              }`}
-              aria-label={listing.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-              aria-pressed={listing.isFavorite}
-            >
-              <Heart size={18} className={listing.isFavorite ? 'fill-current' : ''} strokeWidth={2} />
-            </button>
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+            <div className="flex-grow min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">{listing.sellerName}</p>
+              <div className="flex items-center gap-2 mt-1">
+                <p className="text-xs text-gray-500">
+                  {listing.sellerType === 'professional' ? 'Vendeur professionnel' : 'Vendeur particulier'}
+                </p>
+                <Badge size="sm" variant={listing.sellerType === 'professional' ? 'default' : 'secondary'}>
+                  <User size={10} className="mr-1" />
+                  {listing.sellerType === 'professional' ? 'Pro' : 'Particulier'}
+                </Badge>
+              </div>
+            </div>
+
+            <div className="flex gap-2 ml-3">
+              <button
+                onClick={handleContact}
+                className="p-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                aria-label="Contacter le vendeur"
+              >
+                <MessageCircle size={18} strokeWidth={2} />
+              </button>
+              <button
+                onClick={handleToggleFavorite}
+                className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
+                  listing.isFavorite
+                    ? 'bg-red-500 text-white hover:bg-red-600 hover:scale-110'
+                    : 'bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-500 hover:scale-110'
+                }`}
+                aria-label={listing.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                aria-pressed={listing.isFavorite}
+              >
+                <Heart size={18} className={listing.isFavorite ? 'fill-current' : ''} strokeWidth={2} />
+              </button>
+            </div>
           </div>
         </div>
       </Link>

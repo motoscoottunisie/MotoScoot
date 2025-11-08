@@ -13,11 +13,13 @@ export interface Listing {
   description: string;
   sellerId: string;
   sellerName: string;
+  sellerType: 'professional' | 'individual';
   createdAt: Date;
   isFavorite?: boolean;
   engineSize?: number;
   color?: string;
   type?: 'Sportive' | 'Trail' | 'Custom' | 'Roadster' | 'Routière' | 'Scooter';
+  shopUrl?: string;
 }
 
 export interface User {
