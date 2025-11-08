@@ -5,6 +5,7 @@ import RangeSlider from '../ui/RangeSlider';
 interface SearchFiltersProps {
   filters: SearchFilters;
   onFiltersChange: (filters: SearchFilters) => void;
+  hideActionButtons?: boolean;
 }
 
 const TYPES = ['Moto', 'Scooter', 'Accessoires'];
@@ -13,6 +14,7 @@ const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM',
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
   onFiltersChange,
+  hideActionButtons = false,
 }) => {
   const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
@@ -169,19 +171,21 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         </div>
       </div>
 
-      <div className="pt-4 space-y-3">
-        <button
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 rounded-full transition-colors"
-        >
-          Afficher les résultats
-        </button>
-        <button
-          onClick={resetFilters}
-          className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-full transition-colors"
-        >
-          Réinitialiser
-        </button>
-      </div>
+      {!hideActionButtons && (
+        <div className="pt-4 space-y-3">
+          <button
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 rounded-full transition-colors"
+          >
+            Afficher les résultats
+          </button>
+          <button
+            onClick={resetFilters}
+            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-full transition-colors"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, SlidersHorizontal, X } from 'lucide-react';
 import SearchListingCard from '../components/features/SearchListingCard';
 import SearchFiltersComponent from '../components/features/SearchFilters';
 import { mockListings } from '../data/mockData';
@@ -15,9 +15,26 @@ const SearchResults: React.FC = () => {
   const itemsPerPage = 12;
 
   const [filters, setFilters] = useState<SearchFilters>({});
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+  };
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (filters.brand) count++;
+    if (filters.model) count++;
+    if (filters.yearMin || filters.yearMax) count++;
+    if (filters.mileageMin || filters.mileageMax) count++;
+    if (filters.engineSizeMin || filters.engineSizeMax) count++;
+    if (filters.priceMin || filters.priceMax) count++;
+    if (filters.types && filters.types.length > 0) count++;
+    return count;
+  }, [filters]);
+
+  const handleMobileFilterApply = () => {
+    setIsMobileFilterOpen(false);
   };
 
   const filteredListings = useMemo(() => {
@@ -131,18 +148,78 @@ const SearchResults: React.FC = () => {
         </div>
       </section>
 
+      {/* Mobile Filter Button */}
+      <button
+        onClick={() => setIsMobileFilterOpen(true)}
+        className="lg:hidden fixed bottom-6 right-6 z-40 bg-orange-600 hover:bg-orange-700 text-white rounded-full p-4 shadow-lg transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-orange-300"
+        aria-label="Ouvrir les filtres"
+      >
+        <SlidersHorizontal size={24} />
+        {activeFilterCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+            {activeFilterCount}
+          </span>
+        )}
+      </button>
+
+      {/* Mobile Filter Modal */}
+      {isMobileFilterOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex items-end">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMobileFilterOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Modal Content */}
+          <div className="relative w-full bg-white rounded-t-3xl shadow-2xl max-h-[90vh] overflow-y-auto animate-slide-up">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+              <h2 className="text-xl font-bold text-gray-900">Filtres</h2>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Fermer les filtres"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Filter Content */}
+            <div className="p-6">
+              <SearchFiltersComponent
+                filters={filters}
+                onFiltersChange={setFilters}
+                hideActionButtons={true}
+              />
+            </div>
+
+            {/* Apply Button */}
+            <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6">
+              <button
+                onClick={handleMobileFilterApply}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-4 rounded-full transition-colors shadow-lg"
+              >
+                Afficher {filteredListings.length} résultat{filteredListings.length !== 1 ? 's' : ''}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content - 2 Columns Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Sidebar - 25% */}
-          <aside className="lg:col-span-3">
+          {/* Sidebar - 25% - Hidden on Mobile */}
+          <aside className="hidden lg:block lg:col-span-3">
             <SearchFiltersComponent
               filters={filters}
               onFiltersChange={setFilters}
             />
           </aside>
 
-          {/* Main Content - 75% */}
+          {/* Main Content - 75% on Desktop, Full Width on Mobile */}
           <main className="lg:col-span-9">
             {/* Results Header */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
