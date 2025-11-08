@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import ListingCard from '../components/features/ListingCard';
+import SearchListingCard from '../components/features/SearchListingCard';
 import SearchFiltersComponent from '../components/features/SearchFilters';
 import { mockListings } from '../data/mockData';
 import { SearchFilters } from '../types';
@@ -159,7 +159,7 @@ const SearchResults: React.FC = () => {
               <>
                 <div className="space-y-4 mb-8">
                   {paginatedListings.map(listing => (
-                    <ListingCard
+                    <SearchListingCard
                       key={listing.id}
                       listing={listing}
                       onToggleFavorite={toggleFavorite}

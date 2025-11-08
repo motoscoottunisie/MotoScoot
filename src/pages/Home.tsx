@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { TrendingUp, Shield, Users, Search } from 'lucide-react';
 import MarketplaceCards from '../components/MarketplaceCards';
-import ListingCard from '../components/features/ListingCard';
+import HomeListingCard from '../components/features/HomeListingCard';
 import { mockListings } from '../data/mockData';
 
 const Home: React.FC = () => {
@@ -112,7 +112,7 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredListings.map(listing => (
-              <ListingCard key={listing.id} listing={listing} />
+              <HomeListingCard key={listing.id} listing={listing} />
             ))}
           </div>
         </div>
