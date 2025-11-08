@@ -123,9 +123,6 @@ const Garages: React.FC = () => {
             <span className="text-orange-200">Professionnels de confiance</span>
           </h1>
 
-          <p className="text-lg lg:text-xl text-orange-100 drop-shadow-md max-w-3xl mx-auto mb-8">
-            Trouvez les meilleurs professionnels pour l'entretien et la réparation de votre moto ou scooter
-          </p>
 
           {/* Search Bar */}
           <div className="max-w-3xl mx-auto">
