@@ -157,7 +157,7 @@ const SearchResults: React.FC = () => {
             {/* Listings Grid */}
             {paginatedListings.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="space-y-4 mb-8">
                   {paginatedListings.map(listing => (
                     <ListingCard
                       key={listing.id}
