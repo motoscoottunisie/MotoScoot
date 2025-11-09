@@ -27,11 +27,19 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative text-white h-screen lg:min-h-[73vh] lg:h-auto flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image - Desktop */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale hidden lg:block"
           style={{
             backgroundImage: 'url(/hero-background.webp)',
+          }}
+        />
+
+        {/* Background Image - Mobile */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale lg:hidden"
+          style={{
+            backgroundImage: 'url(/hero-background-mobile.webp)',
           }}
         />
 
@@ -56,7 +64,7 @@ const Home: React.FC = () => {
           </h1>
 
           {/* Glassmorphism Search Bar */}
-          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '39rem' }}>
+          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '42rem' }}>
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
