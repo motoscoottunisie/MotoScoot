@@ -56,7 +56,7 @@ const Home: React.FC = () => {
           </h1>
 
           {/* Glassmorphism Search Bar */}
-          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '42rem' }}>
+          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '39rem' }}>
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
