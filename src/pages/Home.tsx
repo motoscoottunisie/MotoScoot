@@ -47,7 +47,7 @@ const Home: React.FC = () => {
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(180deg, #AF2E13 0%, #E65100 100%)',
+            background: 'linear-gradient(-180deg, #AF2E13 0%, #E65100 100%)',
             opacity: 0.95,
             mixBlendMode: 'multiply',
           }}
