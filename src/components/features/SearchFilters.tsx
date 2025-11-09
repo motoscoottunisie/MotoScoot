@@ -130,6 +130,26 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       </div>
 
       <div className="space-y-6">
+        {/* Filtre Type */}
+        <div className="space-y-3">
+          <span className="text-sm text-gray-600 font-medium">Type</span>
+          <div className="grid grid-cols-3 gap-2">
+            {TYPES.map(type => (
+              <button
+                key={type}
+                onClick={() => handleTypeToggle(type)}
+                className={`px-4 py-2.5 text-sm font-medium rounded-full transition-all ${
+                  (localFilters.types || []).includes(type)
+                    ? 'bg-orange-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Filtre Marque */}
         <div className="space-y-3">
           <label className="text-sm text-gray-600 font-medium block">Marque</label>
@@ -232,26 +252,6 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           formatter={(value) => `${Math.round(value).toLocaleString()}DT`}
           label="Prix"
         />
-
-        {/* Filtre Type */}
-        <div className="space-y-3">
-          <span className="text-sm text-gray-600 font-medium">Type</span>
-          <div className="grid grid-cols-2 gap-2">
-            {TYPES.map(type => (
-              <button
-                key={type}
-                onClick={() => handleTypeToggle(type)}
-                className={`px-4 py-2.5 text-sm font-medium rounded-full transition-all ${
-                  (localFilters.types || []).includes(type)
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Boutons d'action */}
