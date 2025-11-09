@@ -10,6 +10,32 @@ interface SearchFiltersProps {
 
 const TYPES = ['Moto', 'Scooter', 'Accessoires'];
 const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM', 'Harley-Davidson', 'Sym', 'Zontes', 'Forza'];
+const LOCATIONS = [
+  'Ariana',
+  'Béja',
+  'Ben Arous',
+  'Bizerte',
+  'Gabès',
+  'Gafsa',
+  'Jendouba',
+  'Kairouan',
+  'Kasserine',
+  'Kébili',
+  'Le Kef',
+  'Mahdia',
+  'La Manouba',
+  'Médenine',
+  'Monastir',
+  'Nabeul',
+  'Sfax',
+  'Sidi Bouzid',
+  'Siliana',
+  'Sousse',
+  'Tataouine',
+  'Tozeur',
+  'Tunis',
+  'Zaghouan'
+];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
@@ -19,6 +45,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [modelInput, setModelInput] = useState<string>('');
+  const [selectedLocation, setSelectedLocation] = useState<string>('');
 
   const handleChange = (key: keyof SearchFilters, value: any) => {
     const newFilters = {
@@ -54,11 +81,18 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     handleChange('model', model || undefined);
   };
 
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const location = e.target.value;
+    setSelectedLocation(location);
+    handleChange('location', location || undefined);
+  };
+
   const resetFilters = () => {
     const emptyFilters: SearchFilters = {};
     setLocalFilters(emptyFilters);
     setSelectedBrand('');
     setModelInput('');
+    setSelectedLocation('');
     onFiltersChange(emptyFilters);
   };
 
@@ -75,6 +109,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       </div>
 
       <div className="space-y-6">
+        {/* Filtre Marque */}
         <div className="space-y-3">
           <label className="text-sm text-gray-600 font-medium block">Marque</label>
           <select
@@ -89,6 +124,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           </select>
         </div>
 
+        {/* Filtre Modèle */}
         <div className="space-y-3">
           <label className="text-sm text-gray-600 font-medium block">Modèle</label>
           <input
@@ -100,6 +136,22 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           />
         </div>
 
+        {/* Filtre Localisation */}
+        <div className="space-y-3">
+          <label className="text-sm text-gray-600 font-medium block">Localisation</label>
+          <select
+            value={selectedLocation}
+            onChange={handleLocationChange}
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          >
+            <option value="">Toutes les régions</option>
+            {LOCATIONS.map(location => (
+              <option key={location} value={location}>{location}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Range Slider - Année */}
         <RangeSlider
           min={2000}
           max={2026}
@@ -112,6 +164,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           label="Année"
         />
 
+        {/* Range Slider - Kilométrage */}
         <RangeSlider
           min={0}
           max={300000}
@@ -125,6 +178,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           label="Kilométrage"
         />
 
+        {/* Range Slider - Cylindrée */}
         <RangeSlider
           min={50}
           max={1650}
@@ -138,6 +192,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           label="Cylindrée"
         />
 
+        {/* Range Slider - Prix */}
         <RangeSlider
           min={0}
           max={200000}
@@ -151,6 +206,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
           label="Prix"
         />
 
+        {/* Filtre Type */}
         <div className="space-y-3">
           <span className="text-sm text-gray-600 font-medium">Type</span>
           <div className="grid grid-cols-2 gap-2">
@@ -171,6 +227,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         </div>
       </div>
 
+      {/* Boutons d'action */}
       {!hideActionButtons && (
         <div className="pt-4 space-y-3">
           <button
