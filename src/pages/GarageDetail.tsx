@@ -166,36 +166,6 @@ const GarageDetail: React.FC = () => {
               <span className="font-medium">{garage.opening_hours}</span>
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`tel:${garage.phone}`}
-              className="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
-            >
-              <Phone size={20} />
-              Appeler
-            </a>
-            {garage.email && (
-              <a
-                href={`mailto:${garage.email}`}
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors inline-flex items-center justify-center gap-2"
-              >
-                <Mail size={20} />
-                Envoyer un email
-              </a>
-            )}
-            <button
-              onClick={() => setIsFavorite(!isFavorite)}
-              className={`border-2 px-8 py-3 rounded-lg font-semibold transition-colors inline-flex items-center justify-center gap-2 ${
-                isFavorite
-                  ? 'bg-red-500 border-red-500 text-white hover:bg-red-600'
-                  : 'border-white text-white hover:bg-white hover:text-orange-600'
-              }`}
-            >
-              <Heart size={20} className={isFavorite ? 'fill-current' : ''} />
-              {isFavorite ? 'Enregistré' : 'Enregistrer'}
-            </button>
-          </div>
         </div>
       </section>
 
