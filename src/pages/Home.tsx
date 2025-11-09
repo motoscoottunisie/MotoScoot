@@ -118,7 +118,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-s
+
       {/* Stats Section */}
       <section aria-labelledby="stats-heading" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
