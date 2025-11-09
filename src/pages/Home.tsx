@@ -49,14 +49,14 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent" />
 
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 text-center z-10">
-          <h1 className="mb-4 sm:mb-6 drop-shadow-lg" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '44px', lineHeight: '1.1' }}>
+          <h1 className="mb-8 sm:mb-10 drop-shadow-lg" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '44px', lineHeight: '1.1' }}>
             <span className="font-extrabold" style={{ fontWeight: 800 }}>Trouvez la moto d'occasion</span>
             <br />
             <span className="text-orange-200 font-medium" style={{ fontWeight: 500 }}>qui vous correspond</span>
           </h1>
 
           {/* Glassmorphism Search Bar */}
-          <div className="mx-auto mb-8" style={{ maxWidth: '42rem' }}>
+          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '42rem' }}>
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
