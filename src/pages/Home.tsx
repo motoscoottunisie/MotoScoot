@@ -43,11 +43,11 @@ const Home: React.FC = () => {
           }}
         />
 
-        {/* Gradient Overlay at 180° from #611C00 to #D9490A */}
+        {/* Gradient Overlay at 180° from #611C00 to #E65100 */}
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(180deg, #611C00 0%, #D9490A 100%)',
+            background: 'linear-gradient(180deg, #611C00 0%, #E65100 100%)',
             opacity: 0.95,
             mixBlendMode: 'multiply',
           }}
