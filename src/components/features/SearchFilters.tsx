@@ -59,6 +59,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   hideActionButtons = false,
 }) => {
   const [localFilters, setLocalFilters] = useState<SearchFilters>(filters);
+  const [selectedType, setSelectedType] = useState<string>('');
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [modelInput, setModelInput] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('');
@@ -71,6 +72,12 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     };
     setLocalFilters(newFilters);
     onFiltersChange(newFilters);
+  };
+
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const type = e.target.value;
+    setSelectedType(type);
+    handleChange('type', type || undefined);
   };
 
   const handleTypeToggle = (type: string) => {
@@ -110,6 +117,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const resetFilters = () => {
     const emptyFilters: SearchFilters = {};
     setLocalFilters(emptyFilters);
+    setSelectedType('');
     setSelectedBrand('');
     setModelInput('');
     setSelectedLocation('');
@@ -132,22 +140,17 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       <div className="space-y-6">
         {/* Filtre Type */}
         <div className="space-y-3">
-          <span className="text-sm text-gray-600 font-medium">Type</span>
-          <div className="grid grid-cols-3 gap-2">
+          <label className="text-sm text-gray-600 font-medium block">Type</label>
+          <select
+            value={selectedType}
+            onChange={handleTypeChange}
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          >
+            <option value="">Tous les types</option>
             {TYPES.map(type => (
-              <button
-                key={type}
-                onClick={() => handleTypeToggle(type)}
-                className={`px-4 py-2.5 text-sm font-medium rounded-full transition-all ${
-                  (localFilters.types || []).includes(type)
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {type}
-              </button>
+              <option key={type} value={type}>{type}</option>
             ))}
-          </div>
+          </select>
         </div>
 
         {/* Filtre Marque */}
