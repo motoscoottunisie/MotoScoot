@@ -64,10 +64,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
     { icon: Settings, label: 'Account Settings', path: '/settings' },
     { icon: FileText, label: 'My Listings', path: '/dashboard' },
     { icon: Heart, label: 'Favorites', path: '/favorites' },
-    { icon: Mail, label: 'Messages', path: '/messages' },
-    { icon: ShoppingBag, label: 'Orders / Purchases', path: '/orders' },
-    { icon: Phone, label: 'Contact', path: '/contact' },
-    { icon: HelpCircle, label: 'Help Center', path: '/help' },
   ];
 
   return (
