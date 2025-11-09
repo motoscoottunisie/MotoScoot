@@ -21,7 +21,7 @@ const MODELS_BY_BRAND: Record<string, string[]> = {
   Ducati: ['Panigale', 'Monster', 'Multistrada', 'Scrambler', 'Diavel', 'SuperSport', 'Streetfighter'],
   KTM: ['Duke', 'RC', 'Adventure', 'SMC', 'Enduro', 'SX', 'EXC'],
   'Harley-Davidson': ['Sportster', 'Softail', 'Touring', 'Street', 'Pan America', 'LiveWire'],
-  Sym: ['Jet', 'Symphony', 'Fiddle', 'Cruisym', 'Joymax', 'Maxsym'],
+  Sym: ['Jet 14', 'Symphony', 'Fiddle', 'Cruisym', 'Joymax', 'Maxsym', 'Orbit', 'VS', 'Citycom', 'GTS', 'Jet X', 'Jet SR', 'Mask', 'Allo', 'Magic', 'Euro MX', 'Algérie', 'Attila', 'HD', 'Husky', 'Jet S', 'Jet Power', 'Jet Sportx', 'Mio', 'Shark', 'Sanyang', 'VTS'],
   Zontes: ['310R', '310T', '310X', '350D', '125G'],
   Forza: ['125', '300', '350', '750']
 };
