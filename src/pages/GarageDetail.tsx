@@ -179,25 +179,16 @@ const GarageDetail: React.FC = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Informations de contact</h2>
 
               <div className="space-y-4">
-                {/* Garage Name */}
+                {/* Garage Name and Description */}
                 <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
                   <Wrench size={24} className="text-orange-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Nom du garage</h3>
-                    <p className="text-gray-700 text-lg font-medium">{garage.name}</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 text-xl mb-2">{garage.name}</h3>
+                    {garage.description && (
+                      <p className="text-gray-700">{garage.description}</p>
+                    )}
                   </div>
                 </div>
-
-                {/* Description */}
-                {garage.description && (
-                  <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <FileText size={24} className="text-orange-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">Description</h3>
-                      <p className="text-gray-700">{garage.description}</p>
-                    </div>
-                  </div>
-                )}
 
                 {/* Address */}
                 <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
