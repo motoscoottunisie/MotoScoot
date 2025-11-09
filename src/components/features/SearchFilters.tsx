@@ -10,6 +10,22 @@ interface SearchFiltersProps {
 
 const TYPES = ['Moto', 'Scooter', 'Accessoires'];
 const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM', 'Harley-Davidson', 'Sym', 'Zontes', 'Forza'];
+
+// Modèles par marque
+const MODELS_BY_BRAND: Record<string, string[]> = {
+  Honda: ['CBR', 'CB', 'CRF', 'Africa Twin', 'PCX', 'Forza', 'SH', 'NC', 'VFR', 'Shadow', 'Gold Wing'],
+  Yamaha: ['YZF-R', 'MT', 'FZ', 'Tracer', 'Ténéré', 'NMAX', 'XMAX', 'TMAX', 'R1', 'R6', 'V-Star'],
+  Suzuki: ['GSX-R', 'GSX-S', 'V-Strom', 'Hayabusa', 'Burgman', 'Address', 'SV', 'Boulevard'],
+  Kawasaki: ['Ninja', 'Z', 'Versys', 'Vulcan', 'KLX', 'KX', 'W800'],
+  BMW: ['S1000RR', 'R1250', 'F850', 'G310', 'C650', 'K1600', 'R18'],
+  Ducati: ['Panigale', 'Monster', 'Multistrada', 'Scrambler', 'Diavel', 'SuperSport', 'Streetfighter'],
+  KTM: ['Duke', 'RC', 'Adventure', 'SMC', 'Enduro', 'SX', 'EXC'],
+  'Harley-Davidson': ['Sportster', 'Softail', 'Touring', 'Street', 'Pan America', 'LiveWire'],
+  Sym: ['Jet', 'Symphony', 'Fiddle', 'Cruisym', 'Joymax', 'Maxsym'],
+  Zontes: ['310R', '310T', '310X', '350D', '125G'],
+  Forza: ['125', '300', '350', '750']
+};
+
 const LOCATIONS = [
   'Ariana',
   'Béja',
@@ -46,6 +62,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [modelInput, setModelInput] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('');
+  const [availableModels, setAvailableModels] = useState<string[]>([]);
 
   const handleChange = (key: keyof SearchFilters, value: any) => {
     const newFilters = {
@@ -72,10 +89,13 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const brand = e.target.value;
     setSelectedBrand(brand);
+    setAvailableModels(brand ? MODELS_BY_BRAND[brand] || [] : []);
+    setModelInput(''); // Reset model when brand changes
     handleChange('brand', brand || undefined);
+    handleChange('model', undefined); // Clear model filter
   };
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const model = e.target.value;
     setModelInput(model);
     handleChange('model', model || undefined);
@@ -93,6 +113,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     setSelectedBrand('');
     setModelInput('');
     setSelectedLocation('');
+    setAvailableModels([]);
     onFiltersChange(emptyFilters);
   };
 
@@ -127,13 +148,19 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
         {/* Filtre Modèle */}
         <div className="space-y-3">
           <label className="text-sm text-gray-600 font-medium block">Modèle</label>
-          <input
-            type="text"
+          <select
             value={modelInput}
             onChange={handleModelChange}
-            placeholder="Entrez le modèle"
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder:text-gray-400"
-          />
+            disabled={!selectedBrand}
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+          >
+            <option value="">
+              {selectedBrand ? 'Tous les modèles' : 'Sélectionnez d\'abord une marque'}
+            </option>
+            {availableModels.map(model => (
+              <option key={model} value={model}>{model}</option>
+            ))}
+          </select>
         </div>
 
         {/* Filtre Localisation */}
