@@ -271,19 +271,6 @@ const GarageDetail: React.FC = () => {
                 ))}
               </div>
             </div>
-
-            {garage.brands.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Marques traitées</h2>
-                <div className="flex flex-wrap gap-2">
-                  {garage.brands.map((brand, index) => (
-                    <Badge key={index} variant="outline" size="lg">
-                      {brand}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="space-y-6">
