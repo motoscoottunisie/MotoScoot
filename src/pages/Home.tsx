@@ -55,8 +55,7 @@ const Home: React.FC = () => {
             <span className="text-orange-200 font-medium" style={{ fontWeight: 500 }}>qui vous correspond</span>
           </h1>
 
-          {/* Search Bar */}
-          {/* Search Bar */}
+          {/* Glassmorphism Search Bar */}
           <div className="max-w-3xl mx-auto mb-8">
             <form onSubmit={handleSearch} className="relative">
               <input
@@ -64,12 +63,24 @@ const Home: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Recherche..."
-                className="w-full pl-6 pr-14 py-4 bg-white text-gray-900 placeholder-gray-500 rounded-xl text-lg focus:ring-4 focus:ring-orange-300 focus:outline-none shadow-lg"
+                className="w-full pl-6 pr-14 py-4 text-white placeholder-white/80 rounded-xl text-lg focus:ring-4 focus:ring-white/30 focus:outline-none shadow-lg"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                }}
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 text-white rounded-lg transition-all hover:bg-white/40"
                 aria-label="Rechercher"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                }}
               >
                 <Search size={22} />
               </button>
