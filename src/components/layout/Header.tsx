@@ -61,9 +61,9 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   }, [lastScrollY]);
 
   const menuItems = [
-    { icon: Settings, label: 'Account Settings', path: '/settings' },
-    { icon: FileText, label: 'My Listings', path: '/dashboard' },
-    { icon: Heart, label: 'Favorites', path: '/favorites' },
+    { icon: Settings, label: 'Paramètres du compte', path: '/settings' },
+    { icon: FileText, label: 'Mes annonces', path: '/dashboard' },
+    { icon: Heart, label: 'Favoris', path: '/favorites' },
   ];
 
   return (
