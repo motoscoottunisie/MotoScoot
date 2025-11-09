@@ -12,7 +12,8 @@ import {
   Navigation,
   Share2,
   Heart,
-  FileText
+  FileText,
+  MessageCircle
 } from 'lucide-react';
 import { Garage } from '../types/garage';
 import { supabase } from '../lib/supabase';
@@ -299,13 +300,15 @@ const GarageDetail: React.FC = () => {
                     <span>Appeler</span>
                   </a>
 
-                  {garage.email && (
+                  {garage.phone && (
                     <a
-                      href={`mailto:${garage.email}`}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                      href={`https://wa.me/${garage.phone.replace(/\s+/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                     >
-                      <Mail size={20} />
-                      <span>Envoyer un email</span>
+                      <MessageCircle size={20} />
+                      <span>WhatsApp</span>
                     </a>
                   )}
 
