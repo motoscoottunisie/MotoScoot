@@ -318,10 +318,10 @@ const GarageDetail: React.FC = () => {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                   >
                     <Navigation size={20} />
-                    <span>Itinéraire</span>
+                    <span>Google Maps</span>
                   </a>
                 </div>
               </div>
