@@ -9,7 +9,7 @@ interface SearchFiltersProps {
 }
 
 const TYPES = ['Moto', 'Scooter', 'Accessoires'];
-const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM', 'Harley-Davidson'];
+const BRANDS = ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki', 'BMW', 'Ducati', 'KTM', 'Harley-Davidson', 'Sym', 'Zontes', 'Forza'];
 
 const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   filters,
