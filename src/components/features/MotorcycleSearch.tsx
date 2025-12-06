@@ -1,307 +1,356 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Bike, Gauge, MapPin, Search, ChevronDown, X } from 'lucide-react';
+import { Search, Bike, Gauge, MapPin, X, ChevronDown } from 'lucide-react';
 
-const brands = [
-  'Toutes les marques',
-  'Yamaha',
-  'Honda',
-  'CFMOTO',
-  'Kawasaki',
-  'Suzuki',
-  'Ducati',
-  'BMW',
-  'KTM',
-  'Harley-Davidson',
-  'Triumph'
-];
-
-const modelSuggestions = [
-  'MT-07',
-  'MT-09',
-  'CBR1000RR',
-  'Ninja 400',
-  'GSX-R1000',
-  'Panigale V4',
-  'R1250GS'
-];
-
-const cities = [
-  'Toutes les villes',
-  'Tunis',
-  'Sfax',
-  'Sousse',
-  'Kairouan',
-  'Bizerte',
-  'Gabès',
-  'Ariana',
-  'Gafsa',
-  'Monastir',
-  'Ben Arous',
-  'Kasserine',
-  'Médenine',
-  'Nabeul',
-  'Tataouine',
-  'Beja',
-  'Jendouba',
-  'Mahdia',
-  'Siliana',
-  'Manouba',
-  'Kébili',
-  'Tozeur',
-  'Zaghouan',
-  'Sidi Bouzid',
-  'La Marsa',
-  'Hammamet'
-];
-
-const MotorcycleSearch: React.FC = () => {
-  const [marque, setMarque] = useState('Toutes les marques');
-  const [modele, setModele] = useState('');
-  const [ville, setVille] = useState('Toutes les villes');
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filteredSuggestions, setFilteredSuggestions] = useState(modelSuggestions);
+export default function MotorcycleSearchBar() {
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
+  const [city, setCity] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [expandedField, setExpandedField] = useState(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  const brandRef = useRef(null);
+  const modelRef = useRef(null);
+  const cityRef = useRef(null);
+  const searchContainerRef = useRef(null);
 
-  const modeleInputRef = useRef<HTMLInputElement>(null);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
-  const marqueRef = useRef<HTMLSelectElement>(null);
-  const villeRef = useRef<HTMLSelectElement>(null);
+  const brands = [
+    'Yamaha', 'Honda', 'CFMOTO', 'Kawasaki', 'Suzuki', 
+    'Ducati', 'BMW', 'KTM', 'Harley-Davidson', 'Triumph'
+  ];
 
-  const navigate = useNavigate();
+  const modelSuggestions = [
+    'MT-07', 'MT-09', 'CBR1000RR', 'Ninja 400', 
+    'GSX-R1000', 'Panigale V4', 'R1250GS'
+  ];
+
+  const cities = [
+    'Tunis', 'Sfax', 'Sousse', 'Kairouan', 'Bizerte', 'Gabès', 'Ariana',
+    'Gafsa', 'Monastir', 'Ben Arous', 'Kasserine', 'Médenine', 'Nabeul',
+    'Tataouine', 'Beja', 'Jendouba', 'Mahdia', 'Siliana', 'Manouba',
+    'Kébili', 'Tozeur', 'Zaghouan', 'Sidi Bouzid', 'La Marsa', 'Hammamet'
+  ];
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
+    
     checkMobile();
     window.addEventListener('resize', checkMobile);
-
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target as Node) &&
-        !modeleInputRef.current?.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (modele) {
-      const filtered = modelSuggestions.filter(suggestion =>
-        suggestion.toLowerCase().includes(modele.toLowerCase())
-      );
-      setFilteredSuggestions(filtered);
-    } else {
-      setFilteredSuggestions(modelSuggestions);
-    }
-  }, [modele]);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const params = new URLSearchParams();
-    if (marque !== 'Toutes les marques') params.append('marque', marque);
-    if (modele.trim()) params.append('modele', modele);
-    if (ville !== 'Toutes les villes') params.append('ville', ville);
-
-    navigate(`/search?${params.toString()}`);
+  const handleSearch = () => {
+    console.log('Search:', { brand, model, city });
+    setExpandedField(null);
+    setShowSuggestions(false);
   };
 
   const handleClear = () => {
-    setMarque('Toutes les marques');
-    setModele('');
-    setVille('Toutes les villes');
+    setBrand('');
+    setModel('');
+    setCity('');
+    setExpandedField(null);
+    setShowSuggestions(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent, nextRef: React.RefObject<HTMLElement>) => {
-    if (e.key === 'Enter' && nextRef.current) {
+  const handleFieldFocus = (field) => {
+    if (isMobile) {
+      setExpandedField(field);
+    }
+    setShowSuggestions(true);
+  };
+
+  const handleSuggestionClick = (value, setter, field) => {
+    setter(value);
+    setShowSuggestions(false);
+    setExpandedField(null);
+  };
+
+  const handleKeyDown = (e, currentField, nextRef) => {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      nextRef.current.focus();
+      if (nextRef && nextRef.current) {
+        nextRef.current.focus();
+      } else {
+        handleSearch();
+      }
     }
   };
 
-  const hasValues = marque !== 'Toutes les marques' || modele.trim() !== '' || ville !== 'Toutes les villes';
+  const hasValues = false;
 
   return (
-    <div className="w-full" role="search" aria-label="Recherche de motos">
-      <form onSubmit={handleSearch} className="w-full">
-        <div className={`${isMobile ? 'flex flex-col gap-3' : 'flex items-end gap-4'}`}>
-          {/* MARQUE Field */}
-          <div className={`${isMobile ? 'w-full' : 'flex-1'}`}>
-            <label
-              htmlFor="marque-select"
-              className="block text-sm font-semibold text-white mb-2"
-            >
-              Marque
-            </label>
-            <div className="relative">
-              <Bike
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none z-10"
-                size={20}
-              />
-              <select
-                ref={marqueRef}
-                id="marque-select"
-                value={marque}
-                onChange={(e) => setMarque(e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, modeleInputRef)}
-                className="w-full h-14 pl-12 pr-12 rounded-xl border-2 border-gray-300 bg-white text-gray-900 appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer"
-                aria-label="Sélectionner une marque de moto"
-              >
-                {brands.map((brand) => (
-                  <option key={brand} value={brand}>
-                    {brand}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
-                size={20}
-              />
-            </div>
-          </div>
-
-          {/* MODÈLE Field */}
-          <div className={`${isMobile ? 'w-full' : 'flex-1'} relative`}>
-            <label
-              htmlFor="modele-input"
-              className="block text-sm font-semibold text-white mb-2"
-            >
-              Modèle
-            </label>
-            <div className="relative">
-              <Gauge
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none z-10"
-                size={20}
-              />
-              <input
-                ref={modeleInputRef}
-                id="modele-input"
-                type="text"
-                value={modele}
-                onChange={(e) => setModele(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
-                onKeyDown={(e) => handleKeyDown(e, villeRef)}
-                placeholder="Ex: MT-07, CBR1000RR"
-                className="w-full h-14 pl-12 pr-4 rounded-xl border-2 border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
-                aria-label="Entrer un modèle de moto"
-                aria-autocomplete="list"
-                aria-controls="model-suggestions"
-                aria-expanded={showSuggestions && filteredSuggestions.length > 0}
-              />
-
-              {showSuggestions && filteredSuggestions.length > 0 && (
-                <div
-                  ref={suggestionsRef}
-                  id="model-suggestions"
-                  role="listbox"
-                  className="absolute z-20 w-full mt-2 bg-white border-2 border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto"
-                >
-                  {filteredSuggestions.map((suggestion, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      role="option"
-                      aria-selected={modele === suggestion}
-                      onClick={() => {
-                        setModele(suggestion);
-                        setShowSuggestions(false);
-                      }}
-                      className="w-full text-left px-4 py-3 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none transition-colors text-gray-900 border-b border-gray-100 last:border-b-0"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* VILLE Field */}
-          <div className={`${isMobile ? 'w-full' : 'flex-1'}`}>
-            <label
-              htmlFor="ville-select"
-              className="block text-sm font-semibold text-white mb-2"
-            >
-              Ville
-            </label>
-            <div className="relative">
-              <MapPin
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none z-10"
-                size={20}
-              />
-              <select
-                ref={villeRef}
-                id="ville-select"
-                value={ville}
-                onChange={(e) => setVille(e.target.value)}
-                className="w-full h-14 pl-12 pr-12 rounded-xl border-2 border-gray-300 bg-white text-gray-900 appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer"
-                aria-label="Sélectionner une ville"
-              >
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
-                size={20}
-              />
-            </div>
-          </div>
-
-          {/* Search Button - Desktop */}
-          {!isMobile && (
-            <button
-              type="submit"
-              className="h-14 px-8 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-              aria-label="Rechercher des motos"
-            >
-              <Search size={20} />
-              Rechercher
-            </button>
-          )}
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Hero Title */}
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
+            Trouvez votre moto idéale
+          </h1>
+          <p className="text-base md:text-lg text-gray-600">
+            Recherchez parmi des milliers de motos disponibles
+          </p>
         </div>
 
-        {/* Mobile Buttons */}
-        {isMobile && (
-          <div className={`flex gap-3 mt-3 ${hasValues ? '' : 'justify-end'}`}>
-            {hasValues && (
-              <button
-                type="button"
-                onClick={handleClear}
-                className="flex-1 h-14 px-6 bg-white text-gray-700 rounded-xl font-semibold hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300/30 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                aria-label="Effacer les champs de recherche"
-              >
-                <X size={20} />
-                Effacer
-              </button>
+        {/* Search Container */}
+        <div 
+          ref={searchContainerRef}
+          className="bg-white rounded-2xl md:rounded-3xl shadow-lg overflow-hidden"
+        >
+          <div role="search" aria-label="Recherche de moto" className="p-4 md:p-6">
+            
+            {/* Mobile: Stacked Layout */}
+            {isMobile ? (
+              <div className="space-y-3">
+                {/* Brand Field */}
+                <div className={`transition-all duration-300 ${expandedField === 'brand' ? 'order-first' : ''}`}>
+                  <label 
+                    htmlFor="brand-select" 
+                    className="block text-sm font-bold text-gray-800 mb-2"
+                  >
+                    Marque
+                  </label>
+                  <div className="relative">
+                    <Bike className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" aria-hidden="true" />
+                    <select
+                      id="brand-select"
+                      ref={brandRef}
+                      value={brand}
+                      onChange={(e) => setBrand(e.target.value)}
+                      onFocus={() => handleFieldFocus('brand')}
+                      onBlur={() => setExpandedField(null)}
+                      className="w-full h-14 pl-14 pr-12 text-base border-2 border-gray-300 rounded-xl bg-white appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 active:border-blue-500"
+                      aria-describedby="brand-description"
+                    >
+                      <option value="">Toutes les marques</option>
+                      {brands.map((b) => (
+                        <option key={b} value={b}>{b}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true" />
+                  </div>
+                  <span id="brand-description" className="sr-only">
+                    Sélectionnez une marque de moto
+                  </span>
+                </div>
+
+                {/* Model Field */}
+                <div className={`transition-all duration-300 ${expandedField === 'model' ? 'order-first' : ''}`}>
+                  <label 
+                    htmlFor="model-input" 
+                    className="block text-sm font-bold text-gray-800 mb-2"
+                  >
+                    Modèle
+                  </label>
+                  <div className="relative">
+                    <Gauge className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" aria-hidden="true" />
+                    <input
+                      type="text"
+                      id="model-input"
+                      ref={modelRef}
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                      onFocus={() => handleFieldFocus('model')}
+                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                      onKeyDown={(e) => handleKeyDown(e, 'model', cityRef)}
+                      placeholder="Ex: MT-07, CBR1000RR"
+                      className="w-full h-14 pl-14 pr-4 text-base border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                      aria-label="Entrez le modèle de moto"
+                      aria-describedby="model-description"
+                      autoComplete="off"
+                    />
+                    {showSuggestions && expandedField === 'model' && model.length > 0 && (
+                      <div className="absolute z-50 w-full mt-2 bg-white border-2 border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                        {modelSuggestions
+                          .filter(s => s.toLowerCase().includes(model.toLowerCase()))
+                          .map((suggestion, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => handleSuggestionClick(suggestion, setModel, 'model')}
+                              className="w-full px-4 py-3 text-left hover:bg-blue-50 active:bg-blue-100 border-b border-gray-100 last:border-b-0"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                  <span id="model-description" className="sr-only">
+                    Entrez le nom du modèle
+                  </span>
+                </div>
+
+                {/* City Field */}
+                <div className={`transition-all duration-300 ${expandedField === 'city' ? 'order-first' : ''}`}>
+                  <label 
+                    htmlFor="city-input" 
+                    className="block text-sm font-bold text-gray-800 mb-2"
+                  >
+                    Ville
+                  </label>
+                  <div className="relative">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" aria-hidden="true" />
+                    <select
+                      id="city-input"
+                      ref={cityRef}
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      onFocus={() => handleFieldFocus('city')}
+                      onBlur={() => setExpandedField(null)}
+                      onKeyDown={(e) => handleKeyDown(e, 'city', null)}
+                      className="w-full h-14 pl-14 pr-12 text-base border-2 border-gray-300 rounded-xl bg-white appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 active:border-blue-500"
+                      aria-label="Sélectionnez la ville"
+                      aria-describedby="city-description"
+                    >
+                      <option value="">Toutes les villes</option>
+                      {cities.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true" />
+                  </div>
+                  <span id="city-description" className="sr-only">
+                    Sélectionnez une ville de Tunisie
+                  </span>
+                </div>
+
+                {/* Mobile Action Buttons */}
+                <div className="flex gap-3 pt-2">
+                  {hasValues && (
+                    <button
+                      onClick={handleClear}
+                      className="flex-1 h-14 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all flex items-center justify-center gap-2"
+                      aria-label="Effacer la recherche"
+                    >
+                      <X className="w-5 h-5" aria-hidden="true" />
+                      Effacer
+                    </button>
+                  )}
+                  <button
+                    onClick={handleSearch}
+                    className="flex-1 h-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md"
+                    aria-label="Lancer la recherche"
+                  >
+                    <Search className="w-6 h-6" aria-hidden="true" />
+                    Rechercher
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Desktop: Horizontal Layout */
+              <div className="flex gap-3">
+                {/* Brand */}
+                <div className="flex-1">
+                  <label htmlFor="brand-select-desktop" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Marque
+                  </label>
+                  <div className="relative">
+                    <Bike className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
+                    <select
+                      id="brand-select-desktop"
+                      value={brand}
+                      onChange={(e) => setBrand(e.target.value)}
+                      className="w-full h-14 pl-12 pr-10 border-2 border-gray-300 rounded-xl bg-white appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400"
+                    >
+                      <option value="">Toutes les marques</option>
+                      {brands.map((b) => (
+                        <option key={b} value={b}>{b}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true" />
+                  </div>
+                </div>
+
+                {/* Model */}
+                <div className="flex-1">
+                  <label htmlFor="model-input-desktop" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Modèle
+                  </label>
+                  <div className="relative">
+                    <Gauge className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
+                    <input
+                      type="text"
+                      id="model-input-desktop"
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                      placeholder="Ex: MT-07"
+                      className="w-full h-14 pl-12 pr-4 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400"
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+
+                {/* City */}
+                <div className="flex-1">
+                  <label htmlFor="city-input-desktop" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Ville
+                  </label>
+                  <div className="relative">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
+                    <select
+                      id="city-input-desktop"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="w-full h-14 pl-12 pr-10 border-2 border-gray-300 rounded-xl bg-white appearance-none focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400"
+                    >
+                      <option value="">Toutes les villes</option>
+                      {cities.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" aria-hidden="true" />
+                  </div>
+                </div>
+
+                {/* Search Button */}
+                <div className="flex items-end">
+                  <button
+                    onClick={handleSearch}
+                    className="h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-500 shadow-md hover:shadow-lg"
+                    aria-label="Lancer la recherche"
+                  >
+                    <Search className="w-5 h-5" aria-hidden="true" />
+                    Rechercher
+                  </button>
+                </div>
+              </div>
             )}
-            <button
-              type="submit"
-              className={`${hasValues ? 'flex-1' : 'w-full'} h-14 px-6 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2`}
-              aria-label="Rechercher des motos"
-            >
-              <Search size={20} />
-              Rechercher
-            </button>
+
+            {/* Active Filters Display */}
+            {hasValues && (
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-blue-800 flex-1">
+                    <span className="font-semibold">Filtres:</span>
+                    {brand && ` ${brand}`}
+                    {model && ` • ${model}`}
+                    {city && ` • ${city}`}
+                  </p>
+                  {isMobile && (
+                    <button
+                      onClick={handleClear}
+                      className="ml-2 p-1 hover:bg-blue-100 rounded"
+                      aria-label="Effacer tous les filtres"
+                    >
+                      <X className="w-4 h-4 text-blue-600" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Screen reader announcements */}
+            <div role="status" aria-live="polite" className="sr-only">
+              {brand && `Marque: ${brand}`}
+              {model && `, Modèle: ${model}`}
+              {city && `, Ville: ${city}`}
+            </div>
           </div>
-        )}
-      </form>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default MotorcycleSearch;
+}
