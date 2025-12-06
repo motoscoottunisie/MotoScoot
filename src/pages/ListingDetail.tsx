@@ -441,37 +441,6 @@ const ListingDetail = () => {
               </div>
 
               <div className="space-y-3">
-                <button
-                  className="w-full text-white py-3.5 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-4 focus:ring-orange-200 border-2"
-                  style={{
-                    backgroundColor: '#E6580B',
-                    borderColor: '#E6580B'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FBF1EC';
-                    e.currentTarget.style.color = '#E6580B';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#E6580B';
-                    e.currentTarget.style.color = '#ffffff';
-                  }}
-                >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="20" 
-                    height="20" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                  <span>Envoyer un message</span>
-                </button>
-
                 <a
                   href="tel:0612345678"
                   className="w-full bg-green-600 hover:bg-green-500 active:bg-green-700 text-white py-3.5 px-4 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-4 focus:ring-green-200"
@@ -540,9 +509,13 @@ const ListingDetail = () => {
           <div className="text-2xl font-bold text-orange-600">
             {listing.price.toLocaleString('fr-FR')} €
           </div>
-          <button className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
-            Contacter
-          </button>
+          <a
+            href="tel:0612345678"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
+          >
+            <Phone size={20} />
+            <span>Appeler</span>
+          </a>
         </div>
       </nav>
     </div>

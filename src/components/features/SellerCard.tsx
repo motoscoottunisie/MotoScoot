@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, MessageCircle, Eye, Clock, Calendar } from 'lucide-react';
+import { Shield, Eye, Clock, Calendar } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { StarRating } from '../ui/StarRating';
 import { Badge } from '../ui/Badge';
@@ -19,14 +19,12 @@ interface Listing {
 
 interface SellerCardProps {
   listing: Listing;
-  onContact: () => void;
   onViewAllListings?: () => void;
 }
 
-const SellerCard: React.FC<SellerCardProps> = ({ 
-  listing, 
-  onContact,
-  onViewAllListings 
+const SellerCard: React.FC<SellerCardProps> = ({
+  listing,
+  onViewAllListings
 }) => {
   const {
     sellerName,
@@ -131,44 +129,21 @@ const SellerCard: React.FC<SellerCardProps> = ({
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        <button
-          onClick={onContact}
-          className="w-full text-white py-3.5 px-4 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-4 focus:ring-orange-200 border-2"
-          style={{
-            backgroundColor: '#E6580B',
-            borderColor: '#E6580B'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#FBF1EC';
-            e.currentTarget.style.color = '#E6580B';
-            e.currentTarget.style.borderColor = '#E6580B';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#E6580B';
-            e.currentTarget.style.color = '#ffffff';
-            e.currentTarget.style.borderColor = '#E6580B';
-          }}
-          aria-label="Envoyer un message"
-        >
-          <MessageCircle size={20} aria-hidden="true" />
-          <span>Envoyer un message</span>
-        </button>
-
         <a
           href={`tel:${sellerPhone.replace(/\s/g, '')}`}
           className="w-full bg-green-600 hover:bg-green-500 active:bg-green-700 text-white py-3.5 px-4 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-4 focus:ring-green-200"
           aria-label="Appeler le vendeur"
         >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             aria-hidden="true"
           >
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>

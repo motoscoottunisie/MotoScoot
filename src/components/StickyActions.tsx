@@ -1,15 +1,13 @@
 import React from 'react';
-import { MessageCircle, CreditCard, Heart, Phone } from 'lucide-react';
+import { CreditCard, Heart, Phone } from 'lucide-react';
 
 interface StickyActionsProps {
   price: number;
-  onContact: () => void;
   onSecurePayment: () => void;
 }
 
 const StickyActions: React.FC<StickyActionsProps> = ({
   price,
-  onContact,
   onSecurePayment,
 }) => {
   const formatPrice = (price: number) => {
@@ -27,24 +25,14 @@ const StickyActions: React.FC<StickyActionsProps> = ({
           {formatPrice(price)}
         </div>
       </div>
-      
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          onClick={onContact}
-          className="bg-orange-600 hover:bg-orange-700 text-white py-3 px-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-1"
-        >
-          <MessageCircle size={18} />
-          <span className="text-sm">Message</span>
-        </button>
-        
-        <button
-          onClick={onSecurePayment}
-          className="bg-green-600 hover:bg-green-700 text-white py-3 px-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-1"
-        >
-          <CreditCard size={18} />
-          <span className="text-sm">Payer</span>
-        </button>
-      </div>
+
+      <button
+        onClick={onSecurePayment}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+      >
+        <CreditCard size={20} />
+        <span>Paiement sécurisé</span>
+      </button>
     </div>
   );
 };

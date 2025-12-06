@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart, DollarSign, Eye, Heart, MessageCircle, Plus, Settings, TrendingUp } from 'lucide-react';
+import { BarChart, DollarSign, Eye, Heart, Plus, Settings, TrendingUp } from 'lucide-react';
 import { mockListings } from '../data/mockData';
 import ListingCard from '../components/features/ListingCard';
 
@@ -26,19 +26,12 @@ const Dashboard: React.FC = () => {
       value: '89',
       icon: <Heart className="text-red-600" size={24} />,
       change: '+8 ce mois'
-    },
-    {
-      title: 'Messages',
-      value: '23',
-      icon: <MessageCircle className="text-purple-600" size={24} />,
-      change: '5 non lus'
     }
   ];
 
   const tabs = [
     { id: 'overview', label: 'Vue d\'ensemble', icon: <BarChart size={20} /> },
     { id: 'listings', label: 'Mes annonces', icon: <Plus size={20} /> },
-    { id: 'messages', label: 'Messages', icon: <MessageCircle size={20} /> },
     { id: 'settings', label: 'Paramètres', icon: <Settings size={20} /> }
   ];
 
@@ -106,7 +99,7 @@ const Dashboard: React.FC = () => {
                 <div className="text-center text-gray-500">
                   <TrendingUp size={48} className="mx-auto mb-4" />
                   <p>Graphique des performances</p>
-                  <p className="text-sm">Vues, favoris, messages par jour</p>
+                  <p className="text-sm">Vues et favoris par jour</p>
                 </div>
               </div>
             </div>
@@ -131,15 +124,6 @@ const Dashboard: React.FC = () => {
                   <div className="flex-1">
                     <p className="font-medium text-gray-900">Ajout aux favoris</p>
                     <p className="text-sm text-gray-600">Il y a 5 heures</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <MessageCircle className="text-green-600" size={20} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">Nouveau message reçu</p>
-                    <p className="text-sm text-gray-600">Il y a 1 jour</p>
                   </div>
                 </div>
               </div>
@@ -178,18 +162,6 @@ const Dashboard: React.FC = () => {
                 </button>
               </div>
             )}
-          </div>
-        )}
-
-        {/* Messages Tab */}
-        {activeTab === 'messages' && (
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Messages</h2>
-            <div className="text-center py-12">
-              <MessageCircle size={48} className="mx-auto text-gray-400 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Messagerie intégrée</h3>
-              <p className="text-gray-600">Communiquez directement avec les acheteurs intéressés</p>
-            </div>
           </div>
         )}
 
