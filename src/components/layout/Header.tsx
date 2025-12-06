@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Heart, Mail, Plus, Settings, FileText, LogOut } from 'lucide-react';
+import { Menu, X, User, Heart, Plus, Settings, FileText, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
@@ -97,14 +97,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
               aria-label="Favoris"
             >
               <Heart size={20} />
-            </Link>
-
-            <Link
-              to="/messages"
-              className="p-2 text-gray-700 hover:text-orange-600 hover:bg-gray-100 transition-colors rounded-md"
-              aria-label="Messages"
-            >
-              <Mail size={20} />
             </Link>
 
             <div className="relative" ref={dropdownRef}>
