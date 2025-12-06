@@ -8,7 +8,7 @@ import { mockListings } from '../data/mockData';
 
 const Home: React.FC = () => {
   const featuredListings = mockListings.slice(0, 4);
-s
+
   const stats = [
     { icon: <Users className="text-orange-600" size={24} />, value: '50,000+', label: 'Utilisateurs actifs' },
     { icon: <TrendingUp className="text-orange-600" size={24} />, value: '15,000+', label: 'Annonces en ligne' },
