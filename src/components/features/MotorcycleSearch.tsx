@@ -192,9 +192,9 @@ const MotorcycleSearch: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSearch} role="search" aria-label="Recherche de moto" className="w-full">
-      <div className="flex items-end gap-4">
-        <div className="flex-1">
+    <form onSubmit={handleSearch} role="search" aria-label="Recherche de moto" className="w-full max-w-5xl mx-auto">
+      <div className="flex items-end gap-3">
+        <div className="flex-1 max-w-xs">
           <label htmlFor="brand-select-desktop" className="block text-base font-semibold text-white mb-2">
             Marque
           </label>
@@ -218,7 +218,7 @@ const MotorcycleSearch: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 max-w-xs">
           <label htmlFor="model-input-desktop" className="block text-base font-semibold text-white mb-2">
             Modèle
           </label>
@@ -260,7 +260,7 @@ const MotorcycleSearch: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 max-w-xs">
           <label htmlFor="city-select-desktop" className="block text-base font-semibold text-white mb-2">
             Ville
           </label>
@@ -285,7 +285,7 @@ const MotorcycleSearch: React.FC = () => {
 
         <button
           type="submit"
-          className="h-14 px-10 bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white text-base font-bold rounded-2xl transition-all flex items-center gap-2 shadow-lg whitespace-nowrap"
+          className="h-14 px-8 bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white text-base font-bold rounded-2xl transition-all flex items-center gap-2 shadow-lg whitespace-nowrap"
           aria-label="Rechercher des motos"
         >
           <Search className="w-5 h-5" aria-hidden="true" />
