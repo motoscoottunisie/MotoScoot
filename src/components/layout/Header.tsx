@@ -57,6 +57,12 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             <Link
+              to="/search"
+              className="text-gray-700 hover:text-orange-600 font-medium transition-colors px-4 py-2"
+            >
+              Annonces
+            </Link>
+            <Link
               to="/actualites"
               className="text-gray-700 hover:text-orange-600 font-medium transition-colors px-4 py-2"
             >
@@ -157,6 +163,13 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col space-y-1">
+              <Link
+                to="/search"
+                className="text-gray-700 hover:text-orange-600 hover:bg-gray-50 font-medium py-3 px-4 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Annonces
+              </Link>
               <Link
                 to="/actualites"
                 className="text-gray-700 hover:text-orange-600 hover:bg-gray-50 font-medium py-3 px-4 transition-colors"
