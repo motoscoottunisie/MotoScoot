@@ -101,7 +101,7 @@ const MotorcycleSearch: React.FC = () => {
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e, modelRef)}
-                className="w-full h-16 pl-14 pr-12 text-base border-2 border-gray-300 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 transition-colors"
+                className="w-full h-16 pl-14 pr-12 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
                 aria-label="Sélectionner une marque de moto"
               >
                 <option value="">Toutes les marques</option>
@@ -128,14 +128,14 @@ const MotorcycleSearch: React.FC = () => {
                 onFocus={() => setShowSuggestions(true)}
                 onKeyDown={(e) => handleKeyDown(e, cityRef)}
                 placeholder="Ex: MT-07, CBR1000RR"
-                className="w-full h-16 pl-14 pr-4 text-base border-2 border-gray-300 rounded-2xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-blue-600 transition-colors"
+                className="w-full h-16 pl-14 pr-4 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
                 aria-label="Entrer un modèle de moto"
                 autoComplete="off"
               />
               {showSuggestions && filteredSuggestions.length > 0 && model && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute z-50 w-full mt-2 bg-white border-2 border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
+                  className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
                 >
                   {filteredSuggestions.map((suggestion, idx) => (
                     <button
@@ -145,7 +145,7 @@ const MotorcycleSearch: React.FC = () => {
                         setModel(suggestion);
                         setShowSuggestions(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-gray-900 hover:bg-blue-50 active:bg-blue-100 border-b border-gray-100 last:border-b-0"
+                      className="w-full px-4 py-3 text-left text-gray-900 hover:bg-orange-50 active:bg-orange-100 border-b border-gray-100 last:border-b-0 transition-colors"
                     >
                       {suggestion}
                     </button>
@@ -166,7 +166,7 @@ const MotorcycleSearch: React.FC = () => {
                 ref={cityRef}
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full h-16 pl-14 pr-12 text-base border-2 border-gray-300 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 transition-colors"
+                className="w-full h-16 pl-14 pr-12 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
                 aria-label="Sélectionner une ville"
               >
                 <option value="">Toutes les villes</option>
@@ -180,7 +180,7 @@ const MotorcycleSearch: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full h-16 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold rounded-2xl transition-colors flex items-center justify-center gap-3 shadow-lg"
+            className="w-full h-16 bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white text-lg font-bold rounded-2xl transition-all flex items-center justify-center gap-3 shadow-lg"
             aria-label="Rechercher des motos"
           >
             <Search className="w-6 h-6" aria-hidden="true" />
@@ -206,7 +206,7 @@ const MotorcycleSearch: React.FC = () => {
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               onKeyDown={(e) => handleKeyDown(e, modelRef)}
-              className="w-full h-14 pl-12 pr-10 text-base border-2 border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 hover:border-gray-300 transition-colors"
+              className="w-full h-14 pl-12 pr-10 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
               aria-label="Sélectionner une marque de moto"
             >
               <option value="">Toutes les marques</option>
@@ -233,14 +233,14 @@ const MotorcycleSearch: React.FC = () => {
               onFocus={() => setShowSuggestions(true)}
               onKeyDown={(e) => handleKeyDown(e, cityRef)}
               placeholder="Ex: MT-07"
-              className="w-full h-14 pl-12 pr-4 text-base border-2 border-gray-200 rounded-2xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-blue-600 hover:border-gray-300 transition-colors"
+              className="w-full h-14 pl-12 pr-4 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
               aria-label="Entrer un modèle de moto"
               autoComplete="off"
             />
             {showSuggestions && filteredSuggestions.length > 0 && model && (
               <div
                 ref={suggestionsRef}
-                className="absolute z-50 w-full mt-2 bg-white border-2 border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
+                className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
               >
                 {filteredSuggestions.map((suggestion, idx) => (
                   <button
@@ -250,7 +250,7 @@ const MotorcycleSearch: React.FC = () => {
                       setModel(suggestion);
                       setShowSuggestions(false);
                     }}
-                    className="w-full px-4 py-3 text-left text-gray-900 hover:bg-blue-50 border-b border-gray-100 last:border-b-0"
+                    className="w-full px-4 py-3 text-left text-gray-900 hover:bg-orange-50 active:bg-orange-100 border-b border-gray-100 last:border-b-0 transition-colors"
                   >
                     {suggestion}
                   </button>
@@ -271,7 +271,7 @@ const MotorcycleSearch: React.FC = () => {
               ref={cityRef}
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full h-14 pl-12 pr-10 text-base border-2 border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 hover:border-gray-300 transition-colors"
+              className="w-full h-14 pl-12 pr-10 text-base border border-gray-200 rounded-2xl bg-white text-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 hover:border-gray-300 transition-colors shadow-sm"
               aria-label="Sélectionner une ville"
             >
               <option value="">Toutes les villes</option>
@@ -285,7 +285,7 @@ const MotorcycleSearch: React.FC = () => {
 
         <button
           type="submit"
-          className="h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white text-base font-bold rounded-2xl transition-colors flex items-center gap-2 shadow-lg whitespace-nowrap"
+          className="h-14 px-10 bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white text-base font-bold rounded-2xl transition-all flex items-center gap-2 shadow-lg whitespace-nowrap"
           aria-label="Rechercher des motos"
         >
           <Search className="w-5 h-5" aria-hidden="true" />
