@@ -4,15 +4,11 @@ import {
   MapPin,
   Phone,
   Mail,
-  Star,
   Clock,
   ExternalLink,
   Wrench,
   ArrowLeft,
   Navigation,
-  Share2,
-  Heart,
-  FileText,
   MessageCircle
 } from 'lucide-react';
 import { Garage } from '../types/garage';
@@ -27,7 +23,6 @@ const GarageDetail: React.FC = () => {
   const [garage, setGarage] = useState<Garage | null>(null);
   const [loading, setLoading] = useState(true);
   const [similarGarages, setSimilarGarages] = useState<Garage[]>([]);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -77,16 +72,6 @@ const GarageDetail: React.FC = () => {
 
   const handleBack = () => {
     navigate('/garages');
-  };
-
-  const handleShare = () => {
-    if (navigator.share && garage) {
-      navigator.share({
-        title: garage.name,
-        text: garage.description,
-        url: window.location.href,
-      });
-    }
   };
 
   if (loading) {

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Upload, X, Check } from 'lucide-react';
-import Breadcrumb from '../components/Breadcrumb';
 import { mockListings } from '../data/mockData';
 import CheckboxPill from '../components/ui/CheckboxPill';
 import Notification from '../components/ui/Notification';

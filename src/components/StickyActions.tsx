@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard, Heart, Phone } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 
 interface StickyActionsProps {
   price: number;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Check, CreditCard, Lock, AlertTriangle, Loader2 } from 'lucide-react';
+import { Shield, Check, CreditCard, Lock, Loader2 } from 'lucide-react';
 
 interface SecurePaymentProps {
   price: number;
@@ -142,3 +142,10 @@ const SecurePayment: React.FC<SecurePaymentProps> = ({ price, onSecurePayment })
             <Check className="text-green-600 flex-shrink-0" size={ICON_SIZES.small} aria-hidden="true" />
             <span className="text-gray-700">Remboursement si problème majeur</span>
           </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default SecurePayment;

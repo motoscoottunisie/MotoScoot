@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart, DollarSign, Eye, Heart, Plus, Settings, TrendingUp } from 'lucide-react';
+import { BarChart, Eye, Heart, Plus, Settings, TrendingUp } from 'lucide-react';
 import { mockListings } from '../data/mockData';
 import ListingCard from '../components/features/ListingCard';
 

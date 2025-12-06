@@ -26,7 +26,6 @@ const SearchListingCard: React.FC<SearchListingCardProps> = ({ listing, onToggle
   const handleContact = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Contact seller:', listing.sellerName);
   };
 
   return (

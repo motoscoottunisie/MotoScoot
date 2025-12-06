@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Wrench } from 'lucide-react';
 import GarageCard from '../components/features/GarageCard';
 import { Garage } from '../types/garage';
@@ -30,12 +30,10 @@ const Garages: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchGarages();
-  }, []);
-
-  useEffect(() => {
     if (selectedGouvernorat || selectedSpecialty) {
       fetchFilteredGarages();
+    } else {
+      fetchGarages();
     }
   }, [selectedGouvernorat, selectedSpecialty]);
 

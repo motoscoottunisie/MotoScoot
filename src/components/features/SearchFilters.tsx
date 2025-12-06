@@ -65,7 +65,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [availableModels, setAvailableModels] = useState<string[]>([]);
 
-  const handleChange = (key: keyof SearchFilters, value: any) => {
+  const handleChange = (key: keyof SearchFilters, value: string | number | undefined) => {
     const newFilters = {
       ...localFilters,
       [key]: value === '' ? undefined : value
@@ -78,19 +78,6 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     const type = e.target.value;
     setSelectedType(type);
     handleChange('type', type || undefined);
-  };
-
-  const handleTypeToggle = (type: string) => {
-    const currentTypes = localFilters.types || [];
-    const newTypes = currentTypes.includes(type)
-      ? currentTypes.filter(t => t !== type)
-      : [...currentTypes, type];
-    const newFilters = {
-      ...localFilters,
-      types: newTypes.length > 0 ? newTypes : undefined
-    };
-    setLocalFilters(newFilters);
-    onFiltersChange(newFilters);
   };
 
   const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

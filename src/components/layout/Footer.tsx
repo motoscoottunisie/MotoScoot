@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
-import { Button } from '../ui/Button';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();

@@ -29,7 +29,6 @@ const AppRoutes: React.FC = () => {
       <Route path="/garages" element={<Garages />} />
       <Route path="/garage/:id" element={<GarageDetail />} />
       <Route path="/favorites" element={<div className="p-8 text-center">Page Favoris - À développer</div>} />
-      <Route path="/messages" element={<div className="p-8 text-center">Page Messages - À développer</div>} />
     </Routes>
   );
 };
