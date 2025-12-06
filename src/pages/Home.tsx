@@ -1,21 +1,13 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { TrendingUp, Shield, Users, Search } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { TrendingUp, Shield, Users } from 'lucide-react';
 import MarketplaceCards from '../components/MarketplaceCards';
 import HomeListingCard from '../components/features/HomeListingCard';
+import MotorcycleSearch from '../components/features/MotorcycleSearch';
 import { mockListings } from '../data/mockData';
 
 const Home: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
   const featuredListings = mockListings.slice(0, 4);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
-    }
-  };
 
   const stats = [
     { icon: <Users className="text-orange-600" size={24} />, value: '50,000+', label: 'Utilisateurs actifs' },
@@ -63,36 +55,9 @@ const Home: React.FC = () => {
             <span className="text-orange-200 font-medium" style={{ fontWeight: 500 }}>qui vous correspond</span>
           </h1>
 
-          {/* Glassmorphism Search Bar */}
-          <div className="mx-auto mb-10 sm:mb-12" style={{ maxWidth: '39rem' }}>
-            <form onSubmit={handleSearch} className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Recherche..."
-                className="w-full pl-6 pr-14 py-4 text-white placeholder-white/80 rounded-xl text-lg focus:ring-4 focus:ring-white/30 focus:outline-none shadow-lg"
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                }}
-              />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-3 text-white rounded-lg transition-all hover:bg-white/40"
-                aria-label="Rechercher"
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                }}
-              >
-                <Search size={22} />
-              </button>
-            </form>
+          {/* Motorcycle Search Component */}
+          <div className="mb-10 sm:mb-12">
+            <MotorcycleSearch />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
