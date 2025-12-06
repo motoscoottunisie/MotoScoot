@@ -296,4 +296,4 @@ const MotorcycleSearch: React.FC = () => {
   );
 };
 
-export default MotorcycleSearch;s
+export default MotorcycleSearch;
