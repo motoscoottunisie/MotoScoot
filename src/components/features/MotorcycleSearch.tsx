@@ -193,9 +193,9 @@ const MotorcycleSearch: React.FC = () => {
 
   return (
     <form onSubmit={handleSearch} role="search" aria-label="Recherche de moto" className="w-full max-w-5xl mx-auto">
-      <div className="flex items-end gap-3">
+      <div className="flex items-center gap-3">
         <div className="flex-1 max-w-xs">
-          <label htmlFor="brand-select-desktop" className="block text-base font-semibold text-white mb-2">
+          <label htmlFor="brand-select-desktop" className="sr-only">
             Marque
           </label>
           <div className="relative">
@@ -219,7 +219,7 @@ const MotorcycleSearch: React.FC = () => {
         </div>
 
         <div className="flex-1 max-w-xs">
-          <label htmlFor="model-input-desktop" className="block text-base font-semibold text-white mb-2">
+          <label htmlFor="model-input-desktop" className="sr-only">
             Modèle
           </label>
           <div className="relative">
@@ -261,7 +261,7 @@ const MotorcycleSearch: React.FC = () => {
         </div>
 
         <div className="flex-1 max-w-xs">
-          <label htmlFor="city-select-desktop" className="block text-base font-semibold text-white mb-2">
+          <label htmlFor="city-select-desktop" className="sr-only">
             Ville
           </label>
           <div className="relative">
